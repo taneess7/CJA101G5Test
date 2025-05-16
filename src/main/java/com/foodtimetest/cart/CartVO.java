@@ -31,5 +31,4 @@ public class CartVO implements Serializable {
     public void setProdId(Integer prodId) {
         this.prodId = prodId;
     }
-	
 }
