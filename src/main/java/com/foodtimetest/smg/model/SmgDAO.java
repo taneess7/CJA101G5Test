@@ -7,7 +7,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.foodtimetest.cart.CartVO;
 
 public class SmgDAO implements SmgDAO_interface {
 	private static DataSource ds = null;
@@ -33,7 +32,7 @@ public class SmgDAO implements SmgDAO_interface {
 	}
 
 	@Override
-	public CartVO findByPrimaryKey(Integer SMG_ID) {
+	public SmgVO findByPrimaryKey(Integer SMG_ID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
