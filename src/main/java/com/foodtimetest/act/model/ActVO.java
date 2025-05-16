@@ -1,4 +1,4 @@
-package com.foodtime.vo;
+package com.foodtimetest.act.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
