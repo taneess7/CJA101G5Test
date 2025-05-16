@@ -2,7 +2,7 @@ package com.foodtimetest.accrec.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-  
+   
 public class AccrecVO {
 	private Integer commPayoutID;              
     private Byte orderType;                 
