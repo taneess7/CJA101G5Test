@@ -1,9 +1,9 @@
-package com.foodtime.vo;
+package com.foodtimetest.Coupon.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Coupon implements Serializable {
+public class CouponVO implements Serializable {
 
 	// 寫上所有欄位
 	private Integer couId; // 優惠券編號
@@ -15,7 +15,7 @@ public class Coupon implements Serializable {
 
 	// 取得or設置
 
-	public Coupon() {
+	public CouponVO() {
 		super();
 
 	}

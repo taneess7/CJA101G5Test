@@ -1,4 +1,4 @@
-package com.foodtime.vo;
+package com.foodtimetest.storeCate.model;
 
 import java.io.Serializable;
 
