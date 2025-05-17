@@ -1,6 +1,8 @@
 package com.foodtimetest.message;
 
-public class MessageVO {
+import java.io.Serializable;
+
+public class MessageVO implements Serializable{
 	private Integer MesId;
 	private String MesContent;
 	
