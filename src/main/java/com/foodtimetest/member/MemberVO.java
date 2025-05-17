@@ -6,33 +6,33 @@ import java.sql.Date;
 
 public class MemberVO implements Serializable {
 	
-	private Integer memID;
+	private Integer memId;
 	private String memEmail;
 	private String memAccount;
 	private String memPassword;
 	private String memNickname;
 	private String memName;
 	private String memPhone;
-	private short memGender;
+	private Byte memGender;
 	private String memCity;
 	private String memCityarea;
 	private String memAddress;
 	private String memCode;
 	private byte[] memAvatar;
 	private Date memTime;
-	private short memStatus;
-	private short memNoSpeak;
-	private short memNoPost;
-	private short memNoGroup;
-	private short memNOJoingroup;
+	private Byte memStatus;
+	private Byte memNoSpeak;
+	private Byte memNoPost;
+	private Byte memNoGroup;
+	private Byte memNOJoingroup;
 	private Integer totalStarNum;
 	private Integer totalReviews;
 	
-	public Integer getMemID() {
-		return memID;
+	public Integer getMemId() {
+		return memId;
 	}
-	public void setMemID(Integer memID) {
-		this.memID = memID;
+	public void setMemId(Integer memId) {
+		this.memId = memId;
 	}
 	public String getMemEmail() {
 		return memEmail;
@@ -73,7 +73,7 @@ public class MemberVO implements Serializable {
 	public short getMemGender() {
 		return memGender;
 	}
-	public void setMemGender(short memGender) {
+	public void setMemGender(Byte memGender) {
 		this.memGender = memGender;
 	}
 	public String getMemCity() {
@@ -115,31 +115,31 @@ public class MemberVO implements Serializable {
 	public short getMemStatus() {
 		return memStatus;
 	}
-	public void setMemStatus(short memStatus) {
+	public void setMemStatus(Byte memStatus) {
 		this.memStatus = memStatus;
 	}
 	public short getMemNoSpeak() {
 		return memNoSpeak;
 	}
-	public void setMemNoSpeak(short memNoSpeak) {
+	public void setMemNoSpeak(Byte memNoSpeak) {
 		this.memNoSpeak = memNoSpeak;
 	}
 	public short getMemNoPost() {
 		return memNoPost;
 	}
-	public void setMemNoPost(short memNoPost) {
+	public void setMemNoPost(Byte memNoPost) {
 		this.memNoPost = memNoPost;
 	}
 	public short getMemNoGroup() {
 		return memNoGroup;
 	}
-	public void setMemNoGroup(short memNoGroup) {
+	public void setMemNoGroup(Byte memNoGroup) {
 		this.memNoGroup = memNoGroup;
 	}
 	public short getMemNOJoingroup() {
 		return memNOJoingroup;
 	}
-	public void setMemNOJoingroup(short memNOJoingroup) {
+	public void setMemNOJoingroup(Byte memNOJoingroup) {
 		this.memNOJoingroup = memNOJoingroup;
 	}
 	public Integer getTotalStarNum() {
