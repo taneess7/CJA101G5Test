@@ -1,6 +1,8 @@
 package com.foodtimetest.mem.orddet;
 
-public class OrdDetVO {
+import java.io.Serializable;
+
+public class OrdDetVO implements Serializable{
     private Integer ordDetId;   // 訂單明細編號 (主鍵)
     private Integer ordId;      // 訂單編號 (外鍵)
     private Integer prodId;     // 商品編號 (外鍵)
