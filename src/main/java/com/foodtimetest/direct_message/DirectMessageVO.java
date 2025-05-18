@@ -1,31 +1,32 @@
 package com.foodtimetest.direct_message;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class DirectMessageVO {
-	private Integer dmID;
-	private Integer memID;
-	private Integer smgrID;
+public class DirectMessageVO implements Serializable{
+	private Integer dmId;
+	private Integer memId;
+	private Integer smgrId;
 	private String messContent;
 	private Date messTime;
-	private short messDirection;
-	public Integer getDmID() {
-		return dmID;
+	private Byte messDirection;
+	public Integer getDmId() {
+		return dmId;
 	}
-	public void setDmID(Integer dmID) {
-		this.dmID = dmID;
+	public void setDmId(Integer dmId) {
+		this.dmId = dmId;
 	}
 	public Integer getMemID() {
-		return memID;
+		return memId;
 	}
-	public void setMemID(Integer memID) {
-		this.memID = memID;
+	public void setMemID(Integer memId) {
+		this.memId = memId;
 	}
 	public Integer getSmgrID() {
-		return smgrID;
+		return smgrId;
 	}
-	public void setSmgrID(Integer smgrID) {
-		this.smgrID = smgrID;
+	public void setSmgrID(Integer smgrId) {
+		this.smgrId = smgrId;
 	}
 	public String getMessContent() {
 		return messContent;
@@ -42,7 +43,7 @@ public class DirectMessageVO {
 	public short getMessDirection() {
 		return messDirection;
 	}
-	public void setMessDirection(short messDirection) {
+	public void setMessDirection(Byte messDirection) {
 		this.messDirection = messDirection;
 	}
 	
