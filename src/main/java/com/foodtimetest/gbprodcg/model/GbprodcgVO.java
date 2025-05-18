@@ -1,6 +1,8 @@
 package com.foodtimetest.gbprodcg.model;
 
-public class GbprodcgVO {
+import java.io.Serializable;
+
+public class GbprodcgVO implements Serializable{
 	private Integer gbCateId;
 	private String gbCateName;
 	

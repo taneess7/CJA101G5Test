@@ -1,9 +1,10 @@
 package com.foodtimetest.accrec.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
    
-public class AccrecVO {
+public class AccrecVO implements Serializable{
 	private Integer commPayoutID;              
     private Byte orderType;                 
     private Integer orderRefId;              

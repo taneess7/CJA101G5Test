@@ -1,6 +1,7 @@
 package com.foodtimetest.smg.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,16 +14,12 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-public class SmgDAO implements SmgDAO_interface {
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB1");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+public class SmgJDBCDAO implements SmgDAO_interface {
+	String driver = "com.mysql.cj.jdbc.Driver";
+	String url = "jdbc:mysql://localhost:3306/g5?serverTimezone=Asia/Taipei";
+	String userid = "root";
+	String passwd = "maybeormaybe0214";
+		
 	private static final String INSERT_STMT = 
 			"INSERT INTO servermanager (smgr_email,smgr_account,smgr_password,smgr_name,smgr_phone) VALUES (?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
@@ -38,7 +35,8 @@ public class SmgDAO implements SmgDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, smgVO.getSmgrEmail());
@@ -49,6 +47,10 @@ public class SmgDAO implements SmgDAO_interface {
 
 			pstmt.executeUpdate();
 
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -70,6 +72,7 @@ public class SmgDAO implements SmgDAO_interface {
 				}
 			}
 		}
+		
 	}
 
 	@Override
@@ -79,7 +82,8 @@ public class SmgDAO implements SmgDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, smgVO.getSmgrEmail());
@@ -92,6 +96,10 @@ public class SmgDAO implements SmgDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -112,7 +120,9 @@ public class SmgDAO implements SmgDAO_interface {
 				}
 			}
 		}
+		
 	}
+	
 	@Override
 	public SmgVO findByPrimaryKey(Integer smg_Id) {
 		SmgVO smgVO = null;
@@ -122,7 +132,8 @@ public class SmgDAO implements SmgDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, smg_Id);
@@ -137,11 +148,14 @@ public class SmgDAO implements SmgDAO_interface {
 				smgVO.setSmgrPassword(rs.getString("smgr_password"));
 				smgVO.setSmgrName(rs.getString("smgr_name"));
 				smgVO.setSmgrPhone(rs.getString("smgr_phone"));
-				smgVO.setSmgrStatus(rs.getInt("smgr_status"));
 				smgVO.setSmgId(rs.getInt("smgr_Id"));
 			}
 
 			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -183,11 +197,13 @@ public class SmgDAO implements SmgDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
+				// empVO 也稱為 Domain objects
 				smgVO = new SmgVO();
 				smgVO.setSmgrEmail(rs.getString("smgr_email"));
 				smgVO.setSmgrAccount(rs.getString("smgr_account"));
@@ -200,6 +216,10 @@ public class SmgDAO implements SmgDAO_interface {
 			}
 
 			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -229,5 +249,51 @@ public class SmgDAO implements SmgDAO_interface {
 		}
 		return list;
 	}
-	
+	public static void main(String[] args) {
+		SmgJDBCDAO dao = new SmgJDBCDAO();
+		
+		// 新增
+//		SmgVO smgVO1 = new SmgVO();
+//		smgVO1.setSmgrEmail("email");
+//		smgVO1.setSmgrAccount("account");
+//		smgVO1.setSmgrPassword("pwd");
+//		smgVO1.setSmgrName("name");
+//		smgVO1.setSmgrPhone("phone");
+//		dao.insert(smgVO1);
+		
+		// 修改
+//		SmgVO smgVO2 = new SmgVO();
+//		smgVO2.setSmgId(11);
+//		smgVO2.setSmgrEmail("email2");
+//		smgVO2.setSmgrAccount("account2");
+//		smgVO2.setSmgrPassword("pwd2");
+//		smgVO2.setSmgrName("name2");
+//		smgVO2.setSmgrPhone("phone2");
+//		smgVO2.setSmgrStatus(0);
+//		dao.update(smgVO2);
+		// 查詢
+//		SmgVO smgVO3 = dao.findByPrimaryKey(11);
+//		System.out.print(smgVO3.getSmgId() + ",");
+//		System.out.print(smgVO3.getSmgrEmail() + ",");
+//		System.out.print(smgVO3.getSmgrAccount() + ",");
+//		System.out.print(smgVO3.getSmgrPassword() + ",");
+//		System.out.print(smgVO3.getSmgrName() + ",");
+//		System.out.print(smgVO3.getSmgrPhone() + ",");
+//		System.out.print(smgVO3.getSmgrStatus() + ",");
+//		System.out.println("---------------------");
+
+		// 查詢
+		List<SmgVO> list = dao.getAll();
+		for (SmgVO aSmg : list) {
+			System.out.print(aSmg.getSmgId() + ",");
+			System.out.print(aSmg.getSmgrEmail() + ",");
+			System.out.print(aSmg.getSmgrAccount() + ",");
+			System.out.print(aSmg.getSmgrPassword() + ",");
+			System.out.print(aSmg.getSmgrName() + ",");
+			System.out.print(aSmg.getSmgrPhone() + ",");
+			System.out.print(aSmg.getSmgrStatus() + ",");
+			System.out.println();
+		}
+		
+	}
 }

@@ -1,6 +1,8 @@
 package com.foodtimetest.smgfc.model;
 
-public class SmgfcVO {
+import java.io.Serializable;
+
+public class SmgfcVO implements Serializable{
 	private Integer smgFuncId;
 	private String smgFunc;
 	public Integer getSmgFuncId() {

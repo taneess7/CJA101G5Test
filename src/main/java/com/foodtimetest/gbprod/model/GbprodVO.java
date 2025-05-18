@@ -1,8 +1,9 @@
 package com.foodtimetest.gbprod.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class GbprodVO {
+public class GbprodVO implements Serializable{
 	private Integer gbProdId;
 	private Integer storId;
 	private Integer gbCaseId;
