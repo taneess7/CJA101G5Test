@@ -1,0 +1,89 @@
+CREATE DATABASE IF NOT EXISTS g05 ;
+USE g05 ;
+
+DROP TABLE IF EXISTS FAVORITE_LIST ;
+
+-- 以下設定: 自增主鍵的起始值，也就是初始值，取值範圍是1.. 655355 
+set auto_increment_offset = 1 ;
+-- 以下設定: 自增主鍵每次遞增的量，其預設值是1，取值範圍是1.. 655355
+set auto_increment_increment = 1 ;
+
+-- 收藏商品清單
+CREATE TABLE FAVORITE_LIST(
+	MEM_ID INT NOT NULL,
+	PROD_ID INT NOT NULL ,
+    PRIMARY KEY (MEM_ID,PROD_ID)
+--    FOREIGN KEY (MEM_ID) REFERENCES MEMEBER(MEM_ID),
+--    FOREIGN KEY (PROD_ID) REFERENCES PRODUCT(PROD_ID)
+);
+
+INSERT INTO FAVORITE_LIST
+(MEM_ID,PROD_ID)
+VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5);
+
+
+-- 一般商品類別
+DROP TABLE IF EXISTS PRODUCT_CATEGORY ;
+
+-- 以下設定: 自增主鍵的起始值，也就是初始值，取值範圍是1.. 655355 
+-- set auto_increment_offset = 1 ;
+-- 以下設定: 自增主鍵每次遞增的量，其預設值是1，取值範圍是1.. 655355
+-- set auto_increment_increment = 1 ;
+
+CREATE TABLE PRODUCT_CATEGORY(
+	PROD_CATE_ID INT NOT NULL AUTO_INCREMENT ,
+    PROD_CATE VARCHAR(45) NOT NULL ,
+    PRIMARY KEY (PROD_CATE_ID)
+);
+
+INSERT INTO PRODUCT_CATEGORY
+(PROD_CATE)
+VALUES
+('西式'),
+('中式'),
+('日式'),
+('速食'),
+('素食');
+
+
+-- 一般商品
+DROP TABLE IF EXISTS PRODUCT ;
+
+-- 以下設定: 自增主鍵的起始值，也就是初始值，取值範圍是1.. 655355 
+-- set auto_increment_offset = 1 ;
+-- 以下設定: 自增主鍵每次遞增的量，其預設值是1，取值範圍是1.. 655355
+-- set auto_increment_increment = 1 ;
+
+CREATE TABLE PRODUCT(
+	PROD_ID INT NOT NULL AUTO_INCREMENT,
+    STOR_ID INT NOT NULL ,
+    PROD_CATE_ID INT NOT NULL ,
+    PROD_NAME VARCHAR(45) NOT NULL,
+    PROD_DESC VARCHAR(45) NOT NULL,
+    PROD_PRICE INT NOT NULL,
+    PROD_UPDATETIME DATETIME NOT NULL,
+    PROD_STATUS TINYINT NOT NULL,
+    PROD_PHOTO LONGBLOB NULL,
+    PROD_LAST_UPDATE DATETIME NOT NULL,
+    PROD_REPORT_COUNT INT  DEFAULT 0,
+    
+    PRIMARY KEY (PROD_ID)
+    
+--   FOREIGN KEY (STOR_ID) REFERENCES STORE(STOR_ID),
+--   FOREIGN KEY (PROD_CATE_ID) REFERENCES PRODUCT CATEGORY(PROD_CATE_ID),
+);
+
+INSERT INTO PRODUCT
+(STOR_ID,PROD_CATE_ID,PROD_NAME,PROD_DESC,PROD_PRICE,
+PROD_UPDATETIME,PROD_STATUS,PROD_PHOTO,PROD_LAST_UPDATE)
+VALUES
+(1, 1, '青醬雞肉義大利麵', '新鮮羅勒磨成的青醬', 290, '2025-05-09', 1, NULL, '2025-05-18'),
+(1, 2, '鍋燒烏龍麵', '傳統味道好滋味', 100, '2025-05-08', 1, NULL, '2025-05-18'),
+(1, 3, '綜合壽司', '多種口味一次滿足', 120, '2025-05-10', 1, NULL, '2025-05-18'),
+(1, 4, '起司雞腿堡', '起司加現炸雞腿排', 130, '2025-05-11', 0, NULL, '2025-05-18'),
+(1, 5, '紅燒麵', '蔬菜熬成的紅燒湯頭', 110, '2025-05-12', 1, NULL, '2025-05-18');
