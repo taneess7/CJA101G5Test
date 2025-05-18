@@ -21,7 +21,7 @@ public class StoreVO implements Serializable {
 	private Byte storDeliver; // 提供外送
 	private Byte storStatus; // 營業狀態
 	private byte[] storPhoto; // 店家照片
-	private Integer storReportCount; // 店家被檢舉次數
+	private Byte storReportCount; // 店家被檢舉次數
 	private Integer StarNum; // 總評價數
 	private Integer Reviews; // 總評價人數
 
@@ -151,11 +151,11 @@ public class StoreVO implements Serializable {
 		this.storPhoto = storPhoto;
 	}
 
-	public Integer getStorReportCount() {
+	public Byte getStorReportCount() {
 		return storReportCount;
 	}
 
-	public void setStorReportCount(Integer storReportCount) {
+	public void setStorReportCount(Byte storReportCount) {
 		this.storReportCount = storReportCount;
 	}
 
