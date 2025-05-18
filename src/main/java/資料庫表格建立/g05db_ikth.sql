@@ -82,7 +82,7 @@ CREATE TABLE GROUP_ORDERS (
 );
 
 
---收藏團購清單					
+--收藏團購清單		 			
 					
 CREATE TABLE GROUP_BUYING_COLLECTION_LIST (
 	GB_ID                     INT NOT NULL PRIMARY KEY,
