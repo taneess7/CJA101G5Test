@@ -1,6 +1,8 @@
 package com.foodtimetest.smgauth.model;
 
-public class SmgauthVO {
+import java.io.Serializable;
+
+public class SmgauthVO implements Serializable{
 	private Integer smgFuncId;
 	private Integer smgId;
 	public Integer getSmgFuncId() {

@@ -9,8 +9,18 @@ public class SmgVO implements Serializable {
 	private String smgrPassword;
 	private String smgrName;
 	private String smgrPhone;
+	private Integer smgrStatus;
 	
-	
+	public Integer getSmgrStatus() {
+		return smgrStatus;
+	}
+
+
+	public void setSmgrStatus(Integer smgStatus) {
+		this.smgrStatus = smgStatus;
+	}
+
+
 	public Integer getSmgId() {
 		return smgId;
 	}
