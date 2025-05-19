@@ -1,4 +1,4 @@
-package com.foodtimetest.cart;
+package com.foodtimetest.cart.model;
 
 import java.io.Serializable;
 

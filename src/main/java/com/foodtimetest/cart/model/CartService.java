@@ -1,7 +1,4 @@
-package com.foodtimetest.cart;
-import com.foodtimetest.cart.model.CartDAO;
-import com.foodtimetest.cart.model.CartDAO_interface;
-import com.foodtimetest.cart.model.CartVO;
+package com.foodtimetest.cart.model;
 
 import java.util.List;
 
