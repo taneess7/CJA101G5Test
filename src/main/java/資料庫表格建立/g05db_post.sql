@@ -7,16 +7,113 @@ set auto_increment_offset=1;
 -- 以下設定: 自增主鍵每次遞增的量，其預設值是1，取值範圍是1 .. 65535 --
 set auto_increment_increment=1; 
 
-drop table if exists discuss_post;
+drop table if exists post;
 
--- 討論區貼文
-create table DISCUSS_POST (
+-- 貼文
+create table POST (
 POST_ID INT NOT NULL AUTO_INCREMENT,   -- 貼文編號，主鍵，自動遞增
 MEM_ID INT NOT NULL,                   -- 會員編號，外鍵
 POST_CATE_ID INT NOT NULL,             -- 貼文類別編號，外鍵
 POST_DATE datetime NOT NULL,           -- 貼文時間
+POST_STATUS datetime NOT NULL,
+EDITEDAT TINYINT NOT NULL,
+POST_TITLE VARCHAR(100) NOT NULL,
+POST_CONTENT VARCHAR(65535) NOT NULL,
+LIKE_COUNT INT NOT NULL,
+VIEWS INT NOT NULL,
 primary key (POST_ID),
 -- foreign key (MEM_ID) REFERENCES POST_CATEGORY(POST_CATE_ID),
--- foreign key (POST_DATA) REFERENCES
-foreign key (POST_CATE_ID) REFERENCES MEMBER(MEM_ID)
+-- foreign key (POST_CATE_ID) REFERENCES MEMBER(MEM_ID),
 );
+
+INSERT INTO POST (POST_DATE, POST_STATUS, EDITEDAT, POST_TITLE, POST_CONTENT, LIKE_COUNT, VIEWS) VALUES
+('2023-10-26 10:00:00',0,'2023-10-26 10:00:00',xxx,yyy,100,1000),
+('2023-10-27 14:30:00',1,'2023-10-27 14:30:00',xxxyyy,yyyxxx,200,2000),
+('2023-10-28 09:15:00',2,'2023-10-26 10:00:00',xxxyyyzzz,yyyxxxzzz,300,3000);
+
+drop table if exists FAVORITE_POST;
+
+-- 收藏貼文
+create table FAVORITE_POST (
+POST_ID INT NOT NULL,
+MEM_ID INT NOT NULL,
+primary key (POST_ID,MEM_ID),
+-- foreign key (POST_ID) REFERENCES POST(POST_ID),
+-- foreign key (MEM_ID)  references MEMBER(MEM_ID),
+);
+
+INSERT INTO FAVORITE_POST (POST_ID) VALUES(1);
+INSERT INTO FAVORITE_POST (POST_ID) VALUES(2);
+INSERT INTO FAVORITE_POST (POST_ID) VALUES(3);
+
+
+drop table if exists REPORT_POST;
+
+-- 檢舉貼文
+create table REPORT_POST (
+REP_POST_ID INT NOT NULL AUTO_INCREMENT,
+POST_ID INT NOT NULL,
+MEM_ID INT NOT NULL,
+REP_POST_DATE INT NOT NULL,
+REP_POST_REASON INT NOT NULL,
+REP_POST_STATUS INT NOT NULL,
+primary key (REP_POST_ID),
+-- foreign key (POST_ID) REFERENCES POST(POST_ID),
+-- foreign key (MEM_ID) references MEMBER(MEM_ID),
+);
+INSERT INTO REPORT_POST (REP_POST_DATE, REP_POST_REASON, REP_POST_STATUS) VALUES 
+('2023-10-29 11:00:00',"aaaa",0),('2023-10-30 16:45:00',"bbbb",1);
+
+
+drop table if exists POST_CATEGORY;
+
+-- 貼文類別
+create table POST_CATEGORY (
+POST_CATE_ID INT NOT NULL AUTO_INCREMENT,
+POST_CATE varchar(45) NOT NULL,
+primary key (POST_CATE_ID),
+);
+
+INSERT INTO POST_CATEGORY (POST_CATE) VALUES ('食記分享');
+INSERT INTO POST_CATEGORY (POST_CATE) VALUES ('日記');
+INSERT INTO POST_CATEGORY (POST_CATE) VALUES ('店家優惠');
+
+drop table if exists MESSAGE;
+
+
+-- 留言
+create table MESSAGE (
+MES_ID INT NOT NULL AUTO_INCREMENT,
+POST_ID INT NOT NULL,
+MEM_ID INT NOT NULL,
+MES_DATE datetime NOT NULL,
+MES_CONTENT Varchar(255) NOT NULL,
+primary key (MES_ID),
+-- foreign key (POST_ID) REFERENCES POST(POST_ID),
+);
+
+INSERT INTO MESSAGE (MES_DATE, MES_CONTENT) VALUES
+('2023-10-26 11:00:00','Great post!'),
+('2023-10-27 12:30:00', 'I agree.'),
+('2023-10-28 15:00:00', 'Interesting.');
+
+
+
+drop table if exists REPORT_MESSAGE;
+
+-- 檢舉留言
+create table REPORT_MESSAGE (
+REP_MES_ID INT NOT NULL AUTO_INCREMENT,
+MES_ID INT NOT NULL,
+MEM_ID INT NOT NULL,
+REP_MES_DATE datetime NOT NULL,
+REP_MES_REASON varchar(255) NOT NULL,
+REP_MES_STATUS tinyint NOT NULL,
+primary key (REP_MES_ID),
+-- foreign key (MES_ID) REFERENCES MESSAGE(MES_ID),
+-- foreign key (MEM_ID) REFERENCES MEMBER(MEM_ID),
+);
+
+INSERT INTO REPORT_MESSAGE (REP_MES_DATE, REP_MES_REASON, REP_MES_STATUS) VALUES 
+('2023-10-27 13:00:00', 'Inappropriate language', 0),
+('2023-10-28 17:00:00', 'Spam', 1);
