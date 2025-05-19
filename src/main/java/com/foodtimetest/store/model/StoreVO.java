@@ -22,8 +22,8 @@ public class StoreVO implements Serializable {
 	private Byte storStatus; // 營業狀態
 	private byte[] storPhoto; // 店家照片
 	private Byte storReportCount; // 店家被檢舉次數
-	private Integer StarNum; // 總評價數
-	private Integer Reviews; // 總評價人數
+	private Integer starNum; // 總評價數
+	private Integer reviews; // 總評價人數
 
 	public StoreVO() {
 		super();
@@ -160,19 +160,19 @@ public class StoreVO implements Serializable {
 	}
 
 	public Integer getStarNum() {
-		return StarNum;
+		return starNum;
 	}
 
 	public void setStarNum(Integer starNum) {
-		StarNum = starNum;
+		this.starNum = starNum;
 	}
 
 	public Integer getReviews() {
-		return Reviews;
+		return reviews;
 	}
 
 	public void setReviews(Integer reviews) {
-		Reviews = reviews;
+		this.reviews = reviews;
 	}
 
 }
