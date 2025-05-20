@@ -1,7 +1,8 @@
 package com.foodtimetest.product;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+
 
 public class ProductVO implements Serializable{
 
@@ -11,10 +12,10 @@ public class ProductVO implements Serializable{
 	private String prodName;
 	private String prodDesc;
 	private Integer prodPrice;
-	private LocalDateTime prodUpdateTime;
+	private Timestamp prodUpdateTime;
 	private Boolean prodStatus;
 	private byte[] prodPhoto;
-	private LocalDateTime prodLastUpdate;
+	private Timestamp prodLastUpdate;
 	private Integer prodReportCount;
 	public Integer getProdId() {
 		return prodId;
@@ -52,10 +53,10 @@ public class ProductVO implements Serializable{
 	public void setProdPrice(Integer prodPrice) {
 		this.prodPrice = prodPrice;
 	}
-	public LocalDateTime getProdUpdateTime() {
+	public Timestamp getProdUpdateTime() {
 		return prodUpdateTime;
 	}
-	public void setProdUpdateTime(LocalDateTime prodUpdateTime) {
+	public void setProdUpdateTime(Timestamp prodUpdateTime) {
 		this.prodUpdateTime = prodUpdateTime;
 	}
 	public Boolean getProdStatus() {
@@ -70,10 +71,10 @@ public class ProductVO implements Serializable{
 	public void setProdPhoto(byte[] prodPhoto) {
 		this.prodPhoto = prodPhoto;
 	}
-	public LocalDateTime getProdLastUpdate() {
+	public Timestamp getProdLastUpdate() {
 		return prodLastUpdate;
 	}
-	public void setProdLastUpdate(LocalDateTime prodLastUpdate) {
+	public void setProdLastUpdate(Timestamp prodLastUpdate) {
 		this.prodLastUpdate = prodLastUpdate;
 	}
 	public Integer getProdReportCount() {
@@ -82,7 +83,6 @@ public class ProductVO implements Serializable{
 	public void setProdReportCount(Integer prodReportCount) {
 		this.prodReportCount = prodReportCount;
 	}
-	
-	
 
+	
 }
