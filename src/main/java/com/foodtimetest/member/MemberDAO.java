@@ -1,0 +1,318 @@
+package com.foodtimetest.member;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class MemberDAO implements MemDAO_interface {
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB1");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	private static final String INSERT_MEMBER = "INSERT INTO MEMBER (MEM_EMAIL,MEM_ACCOUNT,MEM_PASSWORD,MEM_NICKNAME,MEM_NAME,MEM_PHONE,MEM_GENDER,MEM_CITY,MEM_CITYAREA,MEM_ADDRESS,MEM_CODE,MEM_AVATAR,MEM_TIME,TOTAL_STAR_NUM,TOTAL_REVIEWS)VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String GET_ALL_MEMBER = "SELECT MEM_ID,MEM_EMAIL,MEM_ACCOUNT,MEM_PASSWORD,MEM_NICKNAME,MEM_NAME,MEM_PHONE,MEM_GENDER,MEM_CITY,MEM_CITYAREA,MEM_ADDRESS,MEM_CODE,MEM_AVATAR,MEM_TIME,MEM_STATUS,MEM_NO_SPEAK,MEM_NO_POST,MEM_NO_GROUP,MEM_NO_JOINGROUP,TOTAL_STAR_NUM,TOTAL_REVIEWS FROM MEMBER order by MEM_ID";
+	private static final String GET_ONE_MEMBER = "SELECT MEM_EMAIL,MEM_ACCOUNT,MEM_PASSWORD,MEM_NICKNAME,MEM_NAME,MEM_PHONE,MEM_GENDER,MEM_CITY,MEM_CITYAREA,MEM_ADDRESS,MEM_CODE,MEM_AVATAR,MEM_TIME,MEM_STATUS,MEM_NO_SPEAK,MEM_NO_POST,MEM_NO_GROUP,MEM_NO_JOINGROUP,TOTAL_STAR_NUM,TOTAL_REVIEWS FROM MEMBER where MEM_ID = ?";
+	private static final String MEMBER_UPDATE = "UPDATE MEMBER set MEMBER_EMAIL = ?, MEM_PASSWORD = ?, MEN_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_GENDER = ?, MEM_CITY = ?, MEM_CITYAREA = ? ,MEM_ADDRESS = ?, MEM_AVATAR = ?, MEM_TIME = ?, TOTAL_STAR = ?, TOTAL_REVIEWS = ? where MEM_ID = ?";
+	private static final String DELETE = "DELETE FROM MEMBER where MEM_ID = ?";
+	private static final String MEMBER_PERMISSION_UPDATE = "UPDATE MEMBER set MEMBER_STATUS = ?, MEM_NO_SPEAK = ?, MEM_NO_POST = ?, MEM_NO_GROUP = ?, MEM_NO_JOINGROUP = ? where MEM_ID = ?";
+
+	@Override
+	public void insert(MemberVO memberVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(INSERT_MEMBER);
+
+			pstmt.setString(1, memberVO.getMemEmail());
+			pstmt.setString(2, memberVO.getMemAccount());
+			pstmt.setString(3, memberVO.getMemPassword());
+			pstmt.setString(4, memberVO.getMemNickname());
+			pstmt.setString(5, memberVO.getMemName());
+			pstmt.setString(6, memberVO.getMemPhone());
+			pstmt.setByte(7, memberVO.getMemGender());
+			pstmt.setString(8, memberVO.getMemCity());
+			pstmt.setString(9, memberVO.getMemCityarea());
+			pstmt.setString(10, memberVO.getMemAddress());
+			pstmt.setString(11, memberVO.getMemCode());
+			pstmt.setBytes(12, memberVO.getMemAvatar());
+			pstmt.setDate(13, memberVO.getMemTime());
+			pstmt.setInt(14, memberVO.getTotalStarNum());
+			pstmt.setInt(15, memberVO.getTotalReviews());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void update(MemberVO memberVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(MEMBER_UPDATE);
+
+			pstmt.setString(1, memberVO.getMemEmail());
+			pstmt.setString(2, memberVO.getMemPassword());
+			pstmt.setString(3, memberVO.getMemNickname());
+			pstmt.setString(4, memberVO.getMemName());
+			pstmt.setString(5, memberVO.getMemPhone());
+			pstmt.setByte(6, memberVO.getMemGender());
+			pstmt.setString(7, memberVO.getMemCity());
+			pstmt.setString(8, memberVO.getMemCityarea());
+			pstmt.setString(9, memberVO.getMemAddress());
+			pstmt.setBytes(10, memberVO.getMemAvatar());
+			pstmt.setDate(11, memberVO.getMemTime());
+			pstmt.setInt(12, memberVO.getTotalStarNum());
+			pstmt.setInt(13, memberVO.getTotalReviews());
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	public void updatePermission(MemberVO memberVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(MEMBER_PERMISSION_UPDATE);
+
+			pstmt.setByte(1, memberVO.getMemStatus());
+			pstmt.setByte(2, memberVO.getMemNoSpeak());
+			pstmt.setByte(3, memberVO.getMemNoPost());
+			pstmt.setByte(4, memberVO.getMemNoGroup());
+			pstmt.setByte(5, memberVO.getMemNoJoingroup());
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void delete(Integer memId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE);
+
+			pstmt.setInt(1, memId);
+
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	public MemberVO findByPrimaryKey(Integer memId) {
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_MEMBER);
+
+			pstmt.setInt(1, memId);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				memberVO = new MemberVO();
+				memberVO.setMemId(rs.getInt("MEM_ID"));
+				memberVO.setMemEmail(rs.getString("MEM_EMAIL"));
+				memberVO.setMemAccount(rs.getString("MEM_ACCOUNT"));
+				memberVO.setMemPassword(rs.getString("MEM_PASSWORD"));
+				memberVO.setMemNickname(rs.getString("MEM_NICKNAME"));
+				memberVO.setMemName(rs.getString("MEM_NAME"));
+				memberVO.setMemPhone(rs.getString("MEM_PHONE"));
+				memberVO.setMemGender(rs.getByte("MEM_GENDER"));
+				memberVO.setMemCity(rs.getString("MEM_CITY"));
+				memberVO.setMemCityarea(rs.getString("MEM_CITYAREA"));
+				memberVO.setMemAddress(rs.getString("MEM_ADDRESS"));
+				memberVO.setMemCode(rs.getString("MEM_CODE"));
+				memberVO.setMemAvatar(rs.getBytes("MEM_AVATAR"));
+				memberVO.setMemTime(rs.getDate("MEM_TIME"));
+				memberVO.setMemStatus(rs.getByte("MEM_STATUS"));
+				memberVO.setMemNoSpeak(rs.getByte("MEM_MEM_NO_SPEAK"));
+				memberVO.setMemNoPost(rs.getByte("MEM_NO_POST"));
+				memberVO.setMemNoGroup(rs.getByte("MEM_NO_GROUP"));
+				memberVO.setMemNoJoingroup(rs.getByte("MEM_NO_JOINGROUP"));
+				memberVO.setTotalStarNum(rs.getInt("TOTAL_STAR_NUM"));
+				memberVO.setTotalReviews(rs.getInt("TOTAL_REVIEWS"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
+	}
+
+	@Override
+	public List<MemberVO> getAll() {
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		MemberVO memberVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_MEMBER);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				memberVO = new MemberVO();
+				memberVO.setMemId(rs.getInt("MEM_ID"));
+				memberVO.setMemEmail(rs.getString("MEM_EMAIL"));
+				memberVO.setMemAccount(rs.getString("MEM_ACCOUNT"));
+				memberVO.setMemPassword(rs.getString("MEM_PASSWORD"));
+				memberVO.setMemNickname(rs.getString("MEM_NICKNAME"));
+				memberVO.setMemName(rs.getString("MEM_NAME"));
+				memberVO.setMemPhone(rs.getString("MEM_PHONE"));
+				memberVO.setMemGender(rs.getByte("MEM_GENDER"));
+				memberVO.setMemCity(rs.getString("MEM_CITY"));
+				memberVO.setMemCityarea(rs.getString("MEM_CITYAREA"));
+				memberVO.setMemAddress(rs.getString("MEM_ADDRESS"));
+				memberVO.setMemCode(rs.getString("MEM_CODE"));
+				memberVO.setMemAvatar(rs.getBytes("MEM_AVATAR"));
+				memberVO.setMemTime(rs.getDate("MEM_TIME"));
+				memberVO.setMemStatus(rs.getByte("MEM_STATUS"));
+				memberVO.setMemNoSpeak(rs.getByte("MEM_MEM_NO_SPEAK"));
+				memberVO.setMemNoPost(rs.getByte("MEM_NO_POST"));
+				memberVO.setMemNoGroup(rs.getByte("MEM_NO_GROUP"));
+				memberVO.setMemNoJoingroup(rs.getByte("MEM_NO_JOINGROUP"));
+				memberVO.setTotalStarNum(rs.getInt("TOTAL_STAR_NUM"));
+				memberVO.setTotalReviews(rs.getInt("TOTAL_REVIEWS"));
+				list.add(memberVO);
+
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+
+}

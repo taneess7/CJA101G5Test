@@ -24,7 +24,7 @@ public class MemberVO implements Serializable {
 	private Byte memNoSpeak;
 	private Byte memNoPost;
 	private Byte memNoGroup;
-	private Byte memNOJoingroup;
+	private Byte memNoJoingroup;
 	private Integer totalStarNum;
 	private Integer totalReviews;
 	
@@ -70,7 +70,7 @@ public class MemberVO implements Serializable {
 	public void setMemPhone(String memPhone) {
 		this.memPhone = memPhone;
 	}
-	public short getMemGender() {
+	public Byte getMemGender() {
 		return memGender;
 	}
 	public void setMemGender(Byte memGender) {
@@ -112,35 +112,35 @@ public class MemberVO implements Serializable {
 	public void setMemTime(Date memTime) {
 		this.memTime = memTime;
 	}
-	public short getMemStatus() {
+	public Byte getMemStatus() {
 		return memStatus;
 	}
 	public void setMemStatus(Byte memStatus) {
 		this.memStatus = memStatus;
 	}
-	public short getMemNoSpeak() {
+	public Byte getMemNoSpeak() {
 		return memNoSpeak;
 	}
 	public void setMemNoSpeak(Byte memNoSpeak) {
 		this.memNoSpeak = memNoSpeak;
 	}
-	public short getMemNoPost() {
+	public Byte getMemNoPost() {
 		return memNoPost;
 	}
 	public void setMemNoPost(Byte memNoPost) {
 		this.memNoPost = memNoPost;
 	}
-	public short getMemNoGroup() {
+	public Byte getMemNoGroup() {
 		return memNoGroup;
 	}
 	public void setMemNoGroup(Byte memNoGroup) {
 		this.memNoGroup = memNoGroup;
 	}
-	public short getMemNOJoingroup() {
-		return memNOJoingroup;
+	public Byte getMemNoJoingroup() {
+		return memNoJoingroup;
 	}
-	public void setMemNOJoingroup(Byte memNOJoingroup) {
-		this.memNOJoingroup = memNOJoingroup;
+	public void setMemNoJoingroup(Byte memNoJoingroup) {
+		this.memNoJoingroup = memNoJoingroup;
 	}
 	public Integer getTotalStarNum() {
 		return totalStarNum;
