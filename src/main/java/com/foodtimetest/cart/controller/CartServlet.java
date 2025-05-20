@@ -69,12 +69,12 @@ public class CartServlet extends HttpServlet {
             }
 
             /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-            req.setAttribute("cartVO", cartVO); //更改為自己的PK                                資料庫取出的empVO物件,存入req
+            req.setAttribute("cartVO", cartVO); //更改為自己的PK                                資料庫取出的cartVO物件,存入req
             String url = "/cart/listOneCart.jsp"; //更改為自己的查詢單一資料的頁面
             RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneCart.jsp
             successView.forward(req, res);
         }
-
+//==================================== 來自listAllEmp.jsp的請求 ====================================================================
         if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
             List<String> errorMsgs = new LinkedList<String>();
@@ -86,17 +86,17 @@ public class CartServlet extends HttpServlet {
             Integer shopId = Integer.valueOf(req.getParameter("shopId"));
 
             /*************************** 2.開始查詢資料 ****************************************/
-            EmpService empSvc = new EmpService();
-            EmpVO empVO = empSvc.getOneEmp(empno);
+            CartService cartSvc = new CartService();
+            CartVO cartVO = cartSvc.getOneCart(shopId);
 
             /*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-            req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
-            String url = "/emp/update_emp_input.jsp";
-            RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+            req.setAttribute("cartVO", cartVO); // 資料庫取出的cartVO物件,存入req
+            String url = "/cart/update_cart_input.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_cart_input.jsp
             successView.forward(req, res);
         }
-
-        if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+//==================================== 來自update_Cart_input.jsp的請求 ====================================================================
+        if ("update".equals(action)) { // 來自update_Cart_input.jsp的請求
 
             List<String> errorMsgs = new LinkedList<String>();
             // Store this set in the request scope, in case we need to
@@ -104,7 +104,7 @@ public class CartServlet extends HttpServlet {
             req.setAttribute("errorMsgs", errorMsgs);
 
             /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-            Integer empno = Integer.valueOf(req.getParameter("empno").trim());
+            Integer shopId = Integer.valueOf(req.getParameter("shopId").trim());
 
             String ename = req.getParameter("ename");
             String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -145,35 +145,35 @@ public class CartServlet extends HttpServlet {
 
             Integer deptno = Integer.valueOf(req.getParameter("deptno").trim());
 
-            EmpVO empVO = new EmpVO();
-            empVO.setEmpno(empno);
-            empVO.setEname(ename);
-            empVO.setJob(job);
-            empVO.setHiredate(hiredate);
-            empVO.setSal(sal);
-            empVO.setComm(comm);
-            empVO.setDeptno(deptno);
+            CartVO cartVO = new CartVO();
+            cartVO.setEmpno(empno);
+            cartVO.setEname(ename);
+            cartVO.setJob(job);
+            cartVO.setHiredate(hiredate);
+            cartVO.setSal(sal);
+            cartVO.setComm(comm);
+            cartVO.setDeptno(deptno);
 
             // Send the use back to the form, if there were errors
             if (!errorMsgs.isEmpty()) {
-                req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
-                RequestDispatcher failureView = req.getRequestDispatcher("/emp/update_emp_input.jsp");
+                req.setAttribute("cartVO", cartVO); // 含有輸入格式錯誤的cartVO物件,也存入req
+                RequestDispatcher failureView = req.getRequestDispatcher("/emp/update_cart_input.jsp");
                 failureView.forward(req, res);
                 return; // 程式中斷
             }
 
             /*************************** 2.開始修改資料 *****************************************/
-            EmpService empSvc = new EmpService();
-            empVO = empSvc.updateEmp(empno, ename, job, hiredate, sal, comm, deptno);
+            CartService cartSvc = new CartService();
+            cartVO = cartSvc.updateEmp(empno, ename, job, hiredate, sal, comm, deptno);
 
             /*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-            req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
+            req.setAttribute("cartVO", cartVO); // 資料庫update成功後,正確的的cartVO物件,存入req
             String url = "/emp/listOneCart.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
             successView.forward(req, res);
         }
-
-        if ("insert".equals(action)) { // 來自addEmp.jsp的請求
+//==================================== 來自addCart.jsp的請求 ====================================================================
+        if ("insert".equals(action)) { // 來自addCart.jsp的請求
 
             List<String> errorMsgs = new LinkedList<String>();
             // Store this set in the request scope, in case we need to
@@ -220,32 +220,32 @@ public class CartServlet extends HttpServlet {
 
             Integer deptno = Integer.valueOf(req.getParameter("deptno").trim());
 
-            EmpVO empVO = new EmpVO();
-            empVO.setEname(ename);
-            empVO.setJob(job);
-            empVO.setHiredate(hiredate);
-            empVO.setSal(sal);
-            empVO.setComm(comm);
-            empVO.setDeptno(deptno);
+            CartVO cartVO = new CartVO();
+            cartVO.setEname(ename);
+            cartVO.setJob(job);
+            cartVO.setHiredate(hiredate);
+            cartVO.setSal(sal);
+            cartVO.setComm(comm);
+            cartVO.setDeptno(deptno);
 
             // Send the use back to the form, if there were errors
             if (!errorMsgs.isEmpty()) {
-                req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+                req.setAttribute("cartVO", cartVO); // 含有輸入格式錯誤的cartVO物件,也存入req
                 RequestDispatcher failureView = req.getRequestDispatcher("/emp/addEmp.jsp");
                 failureView.forward(req, res);
                 return;
             }
 
             /*************************** 2.開始新增資料 ***************************************/
-            EmpService empSvc = new EmpService();
-            empVO = empSvc.addEmp(ename, job, hiredate, sal, comm, deptno);
+            CartService empSvc = new CartService();
+            cartVO = empSvc.addEmp(ename, job, hiredate, sal, comm, deptno);
 
             /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
             String url = "/emp/listAllEmp.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
             successView.forward(req, res);
         }
-
+//==================================== 來自listAllEmp.jsp ====================================================================
         if ("delete".equals(action)) { // 來自listAllEmp.jsp
 
             List<String> errorMsgs = new LinkedList<String>();
@@ -257,7 +257,7 @@ public class CartServlet extends HttpServlet {
             Integer empno = Integer.valueOf(req.getParameter("empno"));
 
             /*************************** 2.開始刪除資料 ***************************************/
-            EmpService empSvc = new EmpService();
+            CartService empSvc = new CartService();
             empSvc.deleteEmp(empno);
 
             /*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/

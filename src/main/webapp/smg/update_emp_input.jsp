@@ -9,7 +9,7 @@
 <!-- <html> -->
 <!-- <head> -->
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/> -->
-<!-- <title>員工資料修改 - update_emp_input.jsp</title> -->
+<!-- <title>員工資料修改 - update_cart_input.jsp</title> -->
 
 <!-- <style> -->
 /*   table#table-1 { */
@@ -48,7 +48,7 @@
 
 <!-- <table id="table-1"> -->
 <!-- 	<tr><td> -->
-<!-- 		 <h3>員工資料修改 - update_emp_input.jsp</h3> -->
+<!-- 		 <h3>員工資料修改 - update_cart_input.jsp</h3> -->
 <!-- 		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4> -->
 <!-- 	</td></tr> -->
 <!-- </table> -->

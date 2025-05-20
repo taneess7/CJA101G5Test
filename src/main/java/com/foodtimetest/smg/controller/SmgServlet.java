@@ -96,8 +96,8 @@ public class SmgServlet extends HttpServlet {
 //								
 //				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 //				req.setAttribute("empVO", empVO);         // 資料庫取出的empVO物件,存入req
-//				String url = "/emp/update_emp_input.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+//				String url = "/emp/update_cart_input.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_cart_input.jsp
 //				successView.forward(req, res);
 //		}
 //		
@@ -164,7 +164,7 @@ public class SmgServlet extends HttpServlet {
 //				if (!errorMsgs.isEmpty()) {
 //req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
 //					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/emp/update_emp_input.jsp");
+//							.getRequestDispatcher("/emp/update_cart_input.jsp");
 //					failureView.forward(req, res);
 //					return; //程式中斷
 //				}
