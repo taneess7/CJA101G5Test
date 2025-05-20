@@ -1,4 +1,4 @@
-package com.foodtimetest.groupbuyingcases;
+package com.foodtimetest.groupbuyingcases.model;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -6,10 +6,10 @@ import java.sql.Date;
 
 public class GroupBuyingCasesVO implements Serializable{
 
-	private Integer gbID;
-	private Integer storID;
-	private Integer gbProdID;
-	private Integer memID;
+	private Integer gbId;
+	private Integer storId;
+	private Integer gbProdId;
+	private Integer memId;
 	private Date gbStartTime;
 	private Date gbEndTime;
 	private String gbTitle;
@@ -20,29 +20,29 @@ public class GroupBuyingCasesVO implements Serializable{
 	private String cancelReason;
 	private Integer cumulativePurchaseQuantity;
 	
-	public Integer getGbID() {
-		return gbID;
+	public Integer getGbId() {
+		return gbId;
 	}
-	public void setGbID(Integer gbID) {
-		this.gbID = gbID;
+	public void setGbId(Integer gbId) {
+		this.gbId = gbId;
 	}
-	public Integer getStorID() {
-		return storID;
+	public Integer getStorId() {
+		return storId;
 	}
-	public void setStorID(Integer storID) {
-		this.storID = storID;
+	public void setStorId(Integer storId) {
+		this.storId = storId;
 	}
-	public Integer getGbProdID() {
-		return gbProdID;
+	public Integer getGbProdId() {
+		return gbProdId;
 	}
-	public void setGbProdID(Integer gbProdID) {
-		this.gbProdID = gbProdID;
+	public void setGbProdId(Integer gbProdId) {
+		this.gbProdId = gbProdId;
 	}
-	public Integer getMenID() {
-		return memID;
+	public Integer getMenId() {
+		return memId;
 	}
-	public void setMenID(Integer menID) {
-		this.memID = menID;
+	public void setMenId(Integer menId) {
+		this.memId = menId;
 	}
 	public Date getGbStartTime() {
 		return gbStartTime;

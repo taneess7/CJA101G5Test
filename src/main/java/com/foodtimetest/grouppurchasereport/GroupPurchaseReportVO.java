@@ -5,31 +5,31 @@ import java.sql.Date;
 
 public class GroupPurchaseReportVO implements Serializable{
 	
-	private Integer reportID;
-	private Integer memID;
-	private Integer gbID;
+	private Integer reportId;
+	private Integer memId;
+	private Integer gbId;
 	private String reportReason;
 	private String reportDetail;
 	private byte reportStatus;
 	private Date createAt;
 	private Date updateAt;
-	public Integer getReportID() {
-		return reportID;
+	public Integer getReportId() {
+		return reportId;
 	}
-	public void setReportID(Integer reportID) {
-		this.reportID = reportID;
+	public void setReportId(Integer reportId) {
+		this.reportId = reportId;
 	}
-	public Integer getMemID() {
-		return memID;
+	public Integer getMemId() {
+		return memId;
 	}
-	public void setMemID(Integer memID) {
-		this.memID = memID;
+	public void setMemId(Integer memId) {
+		this.memId = memId;
 	}
-	public Integer getGbID() {
-		return gbID;
+	public Integer getGbId() {
+		return gbId;
 	}
-	public void setGbID(Integer gbID) {
-		this.gbID = gbID;
+	public void setGbId(Integer gbId) {
+		this.gbId = gbId;
 	}
 	public String getReportReason() {
 		return reportReason;
@@ -61,6 +61,7 @@ public class GroupPurchaseReportVO implements Serializable{
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
+	
 	
 	
 
