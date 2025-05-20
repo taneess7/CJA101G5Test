@@ -1,31 +1,75 @@
 package com.foodtimetest.post;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class PostVO implements Serializable{
-	private int PostId;
-	private int MemId;
-	private Date PostDate;
+	private Integer postId;
+	private Integer memId;
+	private Timestamp postDate;
+	private Boolean postStatus;
+	private Timestamp editdate;
+	private String postTitle;
+	private String postContent;
+	private Integer likeCount;
+	private Integer views;
 	
-	public Date getPostDate() {
-		return PostDate;
+	public Integer getPostId() {
+		return postId;
 	}
-	public void setPostDate(Date postDate) {
-		PostDate = postDate;
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
-	public int getPostId() {
-		return PostId;
+	public Integer getMemId() {
+		return memId;
 	}
-	public void setPostId(int postId) {
-		PostId = postId;
+	public void setMemId(Integer memId) {
+		this.memId = memId;
 	}
-	public int getMemId() {
-		return MemId;
+	public Timestamp getPostDate() {
+		return postDate;
 	}
-	public void setMemId(int memId) {
-		MemId = memId;
+	public void setPostDate(Timestamp postDate) {
+		this.postDate = postDate;
 	}
+	public Boolean getPostStatus() {
+		return postStatus;
+	}
+	public void setPostStatus(Boolean postStatus) {
+		this.postStatus = postStatus;
+	}
+	public Timestamp getEditdate() {
+		return editdate;
+	}
+	public void setEditdate(Timestamp editdate) {
+		this.editdate = editdate;
+	}
+	public String getPostTitle() {
+		return postTitle;
+	}
+	public void setPostTitle(String postTitle) {
+		this.postTitle = postTitle;
+	}
+	public String getPostContent() {
+		return postContent;
+	}
+	public void setPostContent(String postContent) {
+		this.postContent = postContent;
+	}
+	public Integer getLikeCount() {
+		return likeCount;
+	}
+	public void setLikeCount(Integer likeCount) {
+		this.likeCount = likeCount;
+	}
+	public Integer getViews() {
+		return views;
+	}
+	public void setViews(Integer views) {
+		this.views = views;
+	}
+	
+	
 }
 	
 	

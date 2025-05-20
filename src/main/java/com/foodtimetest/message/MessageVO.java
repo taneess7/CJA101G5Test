@@ -1,22 +1,44 @@
 package com.foodtimetest.message;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class MessageVO implements Serializable{
-	private Integer MesId;
-	private String MesContent;
-	
+	private Integer mesId;
+	private Integer postId;
+	private Integer memId;
+	private Timestamp mesDate;
+	private String mesContent;
 	public Integer getMesId() {
-		return MesId;
+		return mesId;
 	}
 	public void setMesId(Integer mesId) {
-		MesId = mesId;
+		this.mesId = mesId;
+	}
+	public Integer getPostId() {
+		return postId;
+	}
+	public void setPostId(Integer postId) {
+		this.postId = postId;
+	}
+	public Integer getMemId() {
+		return memId;
+	}
+	public void setMemId(Integer memId) {
+		this.memId = memId;
+	}
+	public Timestamp getMesDate() {
+		return mesDate;
+	}
+	public void setMesDate(Timestamp mesDate) {
+		this.mesDate = mesDate;
 	}
 	public String getMesContent() {
-		return MesContent;
+		return mesContent;
 	}
 	public void setMesContent(String mesContent) {
-		MesContent = mesContent;
+		this.mesContent = mesContent;
 	}
-
+	
+	
 }
