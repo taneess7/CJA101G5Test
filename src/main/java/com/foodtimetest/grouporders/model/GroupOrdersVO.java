@@ -1,15 +1,15 @@
-package com.foodtimetest.grouporders;
+package com.foodtimetest.grouporders.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-public class GroupOrderVO implements Serializable{
+public class GroupOrdersVO implements Serializable{ 
 	
-	private Integer gbOrID;
-	private Integer gbID;
-	private Integer storID;
-	private Integer gbProdID;
+	private Integer gbOrId;
+	private Integer gbId;
+	private Integer storId;
+	private Integer gbProdId;
 	private Date joinTime;
 	private Integer amount;
 	private Integer quantity;
@@ -25,30 +25,29 @@ public class GroupOrderVO implements Serializable{
 	private byte deliveryMethod;
 	private String comment;
 	private Integer rating;
-	
-	public Integer getGbOrID() {
-		return gbOrID;
+	public Integer getGbOrId() {
+		return gbOrId;
 	}
-	public void setGbOrID(Integer gbOrID) {
-		this.gbOrID = gbOrID;
+	public void setGbOrId(Integer gbOrId) {
+		this.gbOrId = gbOrId;
 	}
-	public Integer getGbID() {
-		return gbID;
+	public Integer getGbId() {
+		return gbId;
 	}
-	public void setGbID(Integer gbID) {
-		this.gbID = gbID;
+	public void setGbId(Integer gbId) {
+		this.gbId = gbId;
 	}
-	public Integer getStorID() {
-		return storID;
+	public Integer getStorId() {
+		return storId;
 	}
-	public void setStorID(Integer storID) {
-		this.storID = storID;
+	public void setStorId(Integer storId) {
+		this.storId = storId;
 	}
-	public Integer getGbProdID() {
-		return gbProdID;
+	public Integer getGbProdId() {
+		return gbProdId;
 	}
-	public void setGbProdID(Integer gbProdID) {
-		this.gbProdID = gbProdID;
+	public void setGbProdId(Integer gbProdId) {
+		this.gbProdId = gbProdId;
 	}
 	public Date getJoinTime() {
 		return joinTime;
@@ -141,6 +140,6 @@ public class GroupOrderVO implements Serializable{
 		this.rating = rating;
 	}
 	
-	
 
+	
 }

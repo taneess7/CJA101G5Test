@@ -1,13 +1,13 @@
-package com.foodtimetest.participants;
+package com.foodtimetest.participants.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class ParticipantsVO implements Serializable {
 
-	private Integer parID;
-	private Integer memID;
-	private Integer gbID;
+	private Integer parId;
+	private Integer memId;
+	private Integer gbId;
 	private String parPhone;
 	private String paeName;
 	private String parAddress;
@@ -18,23 +18,23 @@ public class ParticipantsVO implements Serializable {
 	private byte paymentStatus;
 	
 	
-	public Integer getParID() {
-		return parID;
+	public Integer getParId() {
+		return parId;
 	}
-	public void setParID(Integer parID) {
-		this.parID = parID;
+	public void setParId(Integer parId) {
+		this.parId = parId;
 	}
-	public Integer getMemID() {
-		return memID;
+	public Integer getMemId() {
+		return memId;
 	}
-	public void setMemID(Integer memID) {
-		this.memID = memID;
+	public void setMemId(Integer memId) {
+		this.memId = memId;
 	}
-	public Integer getGbID() {
-		return gbID;
+	public Integer getGbId() {
+		return gbId;
 	}
-	public void setGbID(Integer gbID) {
-		this.gbID = gbID;
+	public void setGbId(Integer gbId) {
+		this.gbId = gbId;
 	}
 	public String getParPhone() {
 		return parPhone;
