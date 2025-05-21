@@ -15,8 +15,9 @@ import javax.sql.DataSource;
 
 
 public class SmgJDBCDAO implements SmgDAO_interface {
+
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/g5?serverTimezone=Asia/Taipei";
+	String url = "jdbc:mysql://localhost:3306/g05?serverTimezone=Asia/Taipei";
 	String userid = "root";
 	String passwd = "maybeormaybe0214";
 		
@@ -28,6 +29,57 @@ public class SmgJDBCDAO implements SmgDAO_interface {
 			"SELECT smgr_id,smgr_email,smgr_account,smgr_password,smgr_name,smgr_phone,smgr_status FROM servermanager where smgr_id = ?";
 	private static final String UPDATE = 
 			"UPDATE servermanager set smgr_email=?, smgr_account=?, smgr_password=?, smgr_name=?, smgr_phone=?, smgr_status=? where smgr_id = ?";
+	private static final String GET_ALL_ACCOUNT =
+			"SELECT 1 FROM servermanager WHERE smgr_account = ?";
+	
+	public boolean isAccountExist(String smgrAccount) {
+		boolean exists = false;
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    try {
+	        Class.forName(driver);
+	        con = DriverManager.getConnection(url, userid, passwd);
+	        pstmt = con.prepareStatement(GET_ALL_ACCOUNT);
+	        pstmt.setString(1, smgrAccount);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            exists = true; // 有查到資料就代表帳號存在
+	        }
+
+	    } catch (ClassNotFoundException e) {
+	        throw new RuntimeException("Couldn't load database driver: " + e.getMessage());
+	    } catch (SQLException se) {
+	        throw new RuntimeException("A database error occurred: " + se.getMessage());
+	    } finally {
+	        // 資源關閉
+	        if (rs != null) {
+	            try {
+	                rs.close();
+	            } catch (SQLException se) {
+	                se.printStackTrace(System.err);
+	            }
+	        }
+	        if (pstmt != null) {
+	            try {
+	                pstmt.close();
+	            } catch (SQLException se) {
+	                se.printStackTrace(System.err);
+	            }
+	        }
+	        if (con != null) {
+	            try {
+	                con.close();
+	            } catch (Exception e) {
+	                e.printStackTrace(System.err);
+	            }
+	        }
+	    }
+
+	    return exists;
+	}
 	@Override
 	public void insert(SmgVO smgVO) {
 		Connection con = null;
@@ -283,17 +335,28 @@ public class SmgJDBCDAO implements SmgDAO_interface {
 //		System.out.println("---------------------");
 
 		// 查詢
-		List<SmgVO> list = dao.getAll();
-		for (SmgVO aSmg : list) {
-			System.out.print(aSmg.getSmgId() + ",");
-			System.out.print(aSmg.getSmgrEmail() + ",");
-			System.out.print(aSmg.getSmgrAccount() + ",");
-			System.out.print(aSmg.getSmgrPassword() + ",");
-			System.out.print(aSmg.getSmgrName() + ",");
-			System.out.print(aSmg.getSmgrPhone() + ",");
-			System.out.print(aSmg.getSmgrStatus() + ",");
-			System.out.println();
-		}
+//		List<SmgVO> list = dao.getAll();
+//		for (SmgVO aSmg : list) {
+//			System.out.print(aSmg.getSmgId() + ",");
+//			System.out.print(aSmg.getSmgrEmail() + ",");
+//			System.out.print(aSmg.getSmgrAccount() + ",");
+//			System.out.print(aSmg.getSmgrPassword() + ",");
+//			System.out.print(aSmg.getSmgrName() + ",");
+//			System.out.print(aSmg.getSmgrPhone() + ",");
+//			System.out.print(aSmg.getSmgrStatus() + ",");
+//			System.out.println();
+//		}
+		
+
+        String testAccount = "admin1"; // 測試帳號名稱，請改成你資料庫中已存在或不存在的帳號
+
+        boolean exists = dao.isAccountExist(testAccount);
+
+        if (exists) {
+            System.out.println("帳號 [" + testAccount + "] 已存在！");
+        } else {
+            System.out.println("帳號 [" + testAccount + "] 不存在，可以使用！");
+        }
 		
 	}
 }
