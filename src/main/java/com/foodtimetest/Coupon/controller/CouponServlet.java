@@ -15,7 +15,7 @@ import com.foodtimetest.Coupon.model.CouponVO;
 /**
  * Servlet implementation class CouponServlet
  */
-@WebServlet("/CouponServlet")
+@WebServlet(name = "CouponServlet", urlPatterns = {"/coupon/coupon.do"})
 public class CouponServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
