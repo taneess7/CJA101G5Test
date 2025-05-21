@@ -43,7 +43,9 @@ public class SmgService {
 	public SmgVO getOneSmg(Integer smgId) {
 		return dao.findByPrimaryKey(smgId);
 	}
-
+	public boolean isAccountExists(String smgrAccount) {
+        return dao.isAccountExist(smgrAccount);
+    }
 	public List<SmgVO> getAll() {
 		return dao.getAll();
 	}

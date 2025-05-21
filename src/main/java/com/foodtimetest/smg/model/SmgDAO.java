@@ -31,6 +31,8 @@ public class SmgDAO implements SmgDAO_interface {
 			"SELECT smgr_id,smgr_email,smgr_account,smgr_password,smgr_name,smgr_phone,smgr_status FROM servermanager where smgr_id = ?";
 	private static final String UPDATE = 
 			"UPDATE servermanager set smgr_email=?, smgr_account=?, smgr_password=?, smgr_name=?, smgr_phone=?, smgr_status=? where smgr_id = ?";
+	private static final String GET_ALL_ACCOUNT =
+			"SELECT 1 FROM servermanager WHERE smgr_account = ?";
 	@Override
 	public void insert(SmgVO smgVO) {
 		Connection con = null;
@@ -170,6 +172,52 @@ public class SmgDAO implements SmgDAO_interface {
 			}
 		}
 		return smgVO;
+	}
+	
+	@Override
+	public boolean isAccountExist(String smgrAccount) {
+		boolean exists = false;
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    try {
+	        con = ds.getConnection();
+	        pstmt = con.prepareStatement(GET_ALL_ACCOUNT);
+	        pstmt.setString(1, smgrAccount);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            exists = true; // 有資料就代表帳號存在
+	        }
+
+	    } catch (SQLException se) {
+	        throw new RuntimeException("A database error occurred: " + se.getMessage());
+	    } finally {
+	        if (rs != null) {
+	            try {
+	                rs.close();
+	            } catch (SQLException se) {
+	                se.printStackTrace(System.err);
+	            }
+	        }
+	        if (pstmt != null) {
+	            try {
+	                pstmt.close();
+	            } catch (SQLException se) {
+	                se.printStackTrace(System.err);
+	            }
+	        }
+	        if (con != null) {
+	            try {
+	                con.close();
+	            } catch (Exception e) {
+	                e.printStackTrace(System.err);
+	            }
+	        }
+	    }
+
+	    return exists;
 	}
 
 	@Override

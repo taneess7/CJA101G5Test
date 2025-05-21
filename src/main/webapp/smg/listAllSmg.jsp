@@ -13,7 +13,7 @@
 
 <html>
 <head>
-<title>所有員工資料 - listAllEmp.jsp</title>
+<title>所有員工資料 - listAllSmg.jsp</title>
 
 <style>
   table#table-1 {
@@ -54,7 +54,7 @@
 <h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-1">
 	<tr><td>
-		 <h3>所有員工資料 - listAllEmp.jsp</h3>
+		 <h3>所有員工資料 - listAllSmg.jsp</h3>
 		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -91,7 +91,7 @@
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/smg/smg.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
-			     <input type="hidden" name="empno"  value="${smgVO.smgId}">
+			     <input type="hidden" name="smgId"  value="${smgVO.smgId}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 		</tr>
