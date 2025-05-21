@@ -5,18 +5,20 @@ import java.io.Serializable;
 public class ProductCategoryVO implements Serializable{
 
 	private Integer prodCateId;
-	private Integer prodCate;
+	private String prodCate;
 	public Integer getProdCateId() {
 		return prodCateId;
 	}
 	public void setProdCateId(Integer prodCateId) {
 		this.prodCateId = prodCateId;
 	}
-	public Integer getProdCate() {
+	public String getProdCate() {
 		return prodCate;
 	}
-	public void setProdCate(Integer prodCate) {
+	public void setProdCate(String prodCate) {
 		this.prodCate = prodCate;
 	}
-
+	
+	
+	
 }
