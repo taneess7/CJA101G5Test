@@ -1,0 +1,11 @@
+package com.foodtimetest.product;
+
+import java.util.List;
+
+public interface ProductCategoryDAO_interface {
+	public void insert(ProductCategoryVO productCategoryVO);
+	public void update(ProductCategoryVO productCategoryVO);
+	public void delete(Integer prod_Cate_Id);
+	public ProductCategoryVO findByPrimaryKey(Integer prodCateId);
+	public List<ProductCategoryVO> getAll();
+}
