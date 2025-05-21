@@ -1,0 +1,16 @@
+package com.foodtimetest.message;
+
+import java.util.*;
+
+public class MessageDAO_interface {
+	/*
+	public void insert(MessageVO messagevo);
+	public void update(MessageVO messageVO);
+	public void delete(Integer mesId);
+	
+	public MessageVO findByPrimaryKey(Integer mesId);
+	public List<MessageVO> getALL();
+	public List<MessageVO> findByMemId(Integer memId);
+	public List<MessageVO> findByPostId(Integer postId);
+	*/
+}
