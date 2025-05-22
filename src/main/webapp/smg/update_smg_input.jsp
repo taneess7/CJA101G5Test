@@ -81,7 +81,7 @@
 	</tr>
 	<tr>
 		<td>帳號:<font color=red><b>*</b></font></td>
-		<td>${smgVO.smgAccount}</td> 
+		<td>${smgVO.smgrAccount}</td> 
 	</tr>
 	<tr>
 		<td>密碼:</td>
