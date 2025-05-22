@@ -7,7 +7,7 @@ public class FavoriteListService {
 	private FavoriteListDAO_interface dao;
 	
 	public FavoriteListService() {
-		dao = new FavoriteListJDBCDAO();
+		dao = new FavoriteListJNDIDAO();
 	}
 	
 	public FavoriteListVO addFavoriteList(Integer memId,Integer prodId) {
