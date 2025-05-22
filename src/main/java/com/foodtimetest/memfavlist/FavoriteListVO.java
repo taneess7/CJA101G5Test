@@ -18,5 +18,10 @@ public class FavoriteListVO implements Serializable{
 	public void setProdId(Integer prodId) {
 		this.prodId = prodId;
 	}
+	
+	@Override
+    public String toString() {
+        return "FavoriteListVO [memId=" + memId + ", prodId=" + prodId + "]";
+    }
 
 }
