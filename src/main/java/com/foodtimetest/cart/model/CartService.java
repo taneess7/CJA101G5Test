@@ -11,20 +11,21 @@ public class CartService {
     }
 
     // 新增購物車商品
-    public CartVO addCart(Integer memId, Integer prodId) {
+    public CartVO addCart(Integer memId, Integer prodId , Integer prodN) {
         CartVO cartVO = new CartVO();
         cartVO.setMemId(memId);
         cartVO.setProdId(prodId);
+        cartVO.setProdN(prodN);
         dao.insert(cartVO);
         return cartVO;
     }
 
     // 修改購物車商品
-    public CartVO updateCart(Integer shopId, Integer memId, Integer prodId) {
+    public CartVO updateCart(Integer memId, Integer prodId,Integer prodN) {
         CartVO cartVO = new CartVO();
-        cartVO.setShopId(shopId);
         cartVO.setMemId(memId);
         cartVO.setProdId(prodId);
+        cartVO.setProdN(prodN);
         dao.update(cartVO);
         return cartVO;
     }
