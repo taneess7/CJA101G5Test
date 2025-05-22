@@ -61,12 +61,14 @@
 		<th>購物車商品編號</th>
 		<th>會員編號</th>
 		<th>商品編號</th>
+		<th>商品數量</th>
 	</tr>
 	<tr>
 <%--		//更改為自己的VO來取值--%>
 		<td><%=cartVO.getShopId()%></td>
 		<td><%=cartVO.getMemId()%></td>
 		<td><%=cartVO.getProdId()%></td>
+		<td><%=cartVO.getProdN()%></td>
 	</tr>
 </table>
 

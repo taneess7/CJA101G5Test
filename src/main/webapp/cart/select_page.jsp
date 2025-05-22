@@ -60,14 +60,14 @@
     </FORM>
   </li>
 
-  <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+  <jsp:useBean id="cartSvc" scope="page" class="com.foodtimetest.cart.model.CartService" />
 
   <li>
-    <FORM METHOD="post" ACTION="emp.do" >
-      <b>選擇員工編號:</b>
-      <select size="1" name="empno">
-        <c:forEach var="empVO" items="${empSvc.all}" >
-        <option value="${empVO.empno}">${empVO.empno}
+    <FORM METHOD="post" ACTION="cart/cart.do" >
+      <b>請選擇購物車商品編號:</b>
+      <select size="1" name="shopId">
+        <c:forEach var="cartVO" items="${cartSvc.all}" >
+        <option value="${cartVO.shopId}">${cartVO.shopId}
           </c:forEach>
       </select>
       <input type="hidden" name="action" value="getOne_For_Display">
@@ -76,11 +76,11 @@
   </li>
 
   <li>
-    <FORM METHOD="post" ACTION="emp.do" >
-      <b>選擇員工姓名:</b>
-      <select size="1" name="empno">
-        <c:forEach var="empVO" items="${empSvc.all}" >
-        <option value="${empVO.empno}">${empVO.ename}
+    <FORM METHOD="post" ACTION="cart/cart.do" >
+      <b>選擇商品編號:</b>
+      <select size="1" name="prodId">
+        <c:forEach var="cartVO" items="${cartSvc.all}" >
+        <option value="${cartVO.shopId}">${cartVO.prodN}
           </c:forEach>
       </select>
       <input type="hidden" name="action" value="getOne_For_Display">
@@ -93,7 +93,7 @@
 <h3>員工管理</h3>
 
 <ul>
-  <li><a href='addEmp.jsp'>Add</a> a new Emp.</li>
+  <li><a href='addCart.jsp'>Add</a> a new Emp.</li>
 </ul>
 
 </body>
