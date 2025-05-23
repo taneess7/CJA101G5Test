@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+ <jsp:useBean id="couponSvc" scope="page" class="com.foodtimetest.store.model.StoreService" />
+ 
 <html>
 <head>
 <title>IBM Coupon: Home</title>
@@ -48,11 +49,11 @@
 </c:if>
 
 <ul>
-  <li><a href='listOneCoupon.jsp'>List</a> Coupon.  <br><br></li>
+  <li><a href='listAllEmp.jsp'>List</a> all Coupons.  <br><br></li>
   
   
   <li>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/coupon/coupon.do" >
+    <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" >
         <b>輸入優惠券編號 (如1):</b>
         <input type="text" name="couId">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -60,41 +61,41 @@
     </FORM>
   </li>
 
-<%--   <jsp:useBean id="couponSvc" scope="page" class="com.foodtimetest.model.CouponService" /> --%>
+ 
    
-<!--   <li> -->
-<!--      <FORM METHOD="post" ACTION="coupon.do" > -->
-<!--        <b>選擇優惠券編號:</b> -->
-<!--        <select size="1" name="couId"> -->
-<%--          <c:forEach var="couponVO" items="${couponSvc.all}" >  --%>
-<%--           <option value="${couponVO.couId}">${couponVO.couId} --%>
-<%--          </c:forEach>    --%>
-<!--        </select> -->
-<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
-<!--        <input type="submit" value="送出"> -->
-<!--     </FORM> -->
-<!--   </li> -->
+  <li>
+     <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" >
+       <b>選擇優惠券編號:</b>
+       <select size="1" name="couId">
+         <c:forEach var="couponVO" items="${couponSvc.all}" > 
+          <option value="${couponVO.couId}">${couponVO.couId}
+         </c:forEach>   
+       </select>
+       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="submit" value="送出">
+    </FORM>
+  </li>
   
-<!--   <li> -->
-<!--      <FORM METHOD="post" ACTION="coupon.do" > -->
-<!--        <b>選擇優惠券:</b> -->
-<!--        <select size="1" name="couId"> -->
-<%--          <c:forEach var="couponVO" items="${couponSvc.getOneCoupon}" >  --%>
-<%--           <option value="${couponVO.couId}">${couponVO.couType} --%>
-<%--          </c:forEach>    --%>
-<!--        </select> -->
-<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
-<!--        <input type="submit" value="送出"> -->
-<!--      </FORM> -->
-<!--   </li> -->
+  <li>
+     <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" >
+       <b>選擇優惠券類型:</b>
+       <select size="1" name="couId">
+         <c:forEach var="couponVO" items="${couponSvc.all}" > 
+          <option value="${couponVO.couId}">${couponVO.couType}
+         </c:forEach>   
+       </select>
+       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="submit" value="送出">
+     </FORM>
+  </li>
 </ul>
 
 
-<!-- <h3>優惠券管理</h3> -->
+<h3>優惠券管理</h3>
 
-<!-- <ul> -->
-<!--   <li><a href='addEmp.jsp'>Add</a> a new Emp.</li> -->
-<!-- </ul> -->
+<ul>
+  <li><a href='addEmp.jsp'>Add</a> a new Coupon.</li>
+</ul>
 
 </body>
 </html>
