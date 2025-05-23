@@ -11,7 +11,7 @@ public interface GroupOrdersDAO_interface {
     public GroupOrdersVO findByPrimaryKey(Integer gbOrId);
     public List<GroupOrdersVO> getAll();
     //查詢某一團購案的所有訂單
-    public List<GroupOrdersVO> findByGroupBuyingId(Integer gbId);
+    public List<GroupOrdersVO> findByGBId(Integer gbId);
 	//查詢某一會員的所有團購訂單
     public List<GroupOrdersVO> findByMemberId(Integer memId);
     

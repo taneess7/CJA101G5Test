@@ -1,4 +1,4 @@
-package com.foodtimetest.grouppurchasereport;
+package com.foodtimetest.grouppurchasereport.model;
 
 import java.io.Serializable;
 import java.sql.Date;

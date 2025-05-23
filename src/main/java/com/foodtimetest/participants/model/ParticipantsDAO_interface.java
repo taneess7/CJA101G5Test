@@ -11,5 +11,5 @@ public interface ParticipantsDAO_interface {
 	public List<ParticipantsVO> getAll();
 	//查詢某團購案的所有參與者
 	public List<ParticipantsVO> findByGBId(Integer gbId);
-	////////////////////////////////  ??
+
 }
