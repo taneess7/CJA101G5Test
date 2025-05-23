@@ -8,7 +8,7 @@ public class MemService {
 		dao = new MemberDAO();
 	}
 	
-	public MemberVO addMem(String memEmail,String memAccount,String memPassword,String memNickname,String memName,String memPhone,Byte memGender,String memCity,String memCityarea,String memAddress,String memCode,byte[] memAvatar,Date memTime,Integer totalStarNum,Integer totalReviews) {
+	public MemberVO addMem(String memEmail,String memAccount,String memPassword,String memNickname,String memName,String memPhone,Byte memGender,String memCity,String memCityarea,String memAddress,byte[] memAvatar) {
 		MemberVO memVO = new MemberVO();
 		
 		memVO.setMemEmail(memEmail);
@@ -21,11 +21,11 @@ public class MemService {
 		memVO.setMemCity(memCity);
 		memVO.setMemCityarea(memCityarea);
 		memVO.setMemAddress(memAddress);
-		memVO.setMemCode(memCode);
+//		memVO.setMemCode(memCode);
 		memVO.setMemAvatar(memAvatar);
-		memVO.setMemTime(memTime);
-		memVO.setTotalStarNum(totalStarNum);
-		memVO.setTotalReviews(totalReviews);
+//		memVO.setMemTime(memTime);
+//		memVO.setTotalStarNum(totalStarNum);
+//		memVO.setTotalReviews(totalReviews);
 		dao.insert(memVO);
 		
 	
@@ -44,9 +44,9 @@ public class MemService {
 		memVO.setMemCityarea(memCityarea);
 		memVO.setMemAddress(memAddress);
 		memVO.setMemAvatar(memAvatar);
-		memVO.setMemTime(memTime);
-		memVO.setTotalStarNum(totalStarNum);
-		memVO.setTotalReviews(totalReviews);
+//		memVO.setMemTime(memTime);
+//		memVO.setTotalStarNum(totalStarNum);
+//		memVO.setTotalReviews(totalReviews);
 		dao.update(memVO);
 		
 		
@@ -74,7 +74,9 @@ public class MemService {
 	public MemberVO getOneMember(Integer memId) {
 		return dao.findByPrimaryKey(memId);
 	}
-	
+	public boolean isAccountExists(String memAccount) {
+        return dao.isAccountExist(memAccount);
+	}
 	public List<MemberVO> getAll(){
 		return dao.getAll();
 	}
