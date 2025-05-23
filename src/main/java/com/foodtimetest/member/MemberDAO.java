@@ -21,13 +21,21 @@ public class MemberDAO implements MemDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_MEMBER = "INSERT INTO MEMBER (MEM_EMAIL,MEM_ACCOUNT,MEM_PASSWORD,MEM_NICKNAME,MEM_NAME,MEM_PHONE,MEM_GENDER,MEM_CITY,MEM_CITYAREA,MEM_ADDRESS,MEM_CODE,MEM_AVATAR,MEM_TIME,TOTAL_STAR_NUM,TOTAL_REVIEWS)VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String GET_ALL_MEMBER = "SELECT MEM_ID,MEM_EMAIL,MEM_ACCOUNT,MEM_PASSWORD,MEM_NICKNAME,MEM_NAME,MEM_PHONE,MEM_GENDER,MEM_CITY,MEM_CITYAREA,MEM_ADDRESS,MEM_CODE,MEM_AVATAR,MEM_TIME,MEM_STATUS,MEM_NO_SPEAK,MEM_NO_POST,MEM_NO_GROUP,MEM_NO_JOINGROUP,TOTAL_STAR_NUM,TOTAL_REVIEWS FROM MEMBER order by MEM_ID";
-	private static final String GET_ONE_MEMBER = "SELECT MEM_EMAIL,MEM_ACCOUNT,MEM_PASSWORD,MEM_NICKNAME,MEM_NAME,MEM_PHONE,MEM_GENDER,MEM_CITY,MEM_CITYAREA,MEM_ADDRESS,MEM_CODE,MEM_AVATAR,MEM_TIME,MEM_STATUS,MEM_NO_SPEAK,MEM_NO_POST,MEM_NO_GROUP,MEM_NO_JOINGROUP,TOTAL_STAR_NUM,TOTAL_REVIEWS FROM MEMBER where MEM_ID = ?";
-	private static final String MEMBER_UPDATE = "UPDATE MEMBER set MEMBER_EMAIL = ?, MEM_PASSWORD = ?, MEN_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_GENDER = ?, MEM_CITY = ?, MEM_CITYAREA = ? ,MEM_ADDRESS = ?, MEM_AVATAR = ?, MEM_TIME = ?, TOTAL_STAR = ?, TOTAL_REVIEWS = ? where MEM_ID = ?";
-	private static final String DELETE = "DELETE FROM MEMBER where MEM_ID = ?";
-	private static final String MEMBER_PERMISSION_UPDATE = "UPDATE MEMBER set MEMBER_STATUS = ?, MEM_NO_SPEAK = ?, MEM_NO_POST = ?, MEM_NO_GROUP = ?, MEM_NO_JOINGROUP = ? where MEM_ID = ?";
-
+	private static final String INSERT_MEMBER = 
+			"INSERT INTO MEMBER (MEM_EMAIL,MEM_ACCOUNT,MEM_PASSWORD,MEM_NICKNAME,MEM_NAME,MEM_PHONE,MEM_GENDER,MEM_CITY,MEM_CITYAREA,MEM_ADDRESS,MEM_CODE,MEM_AVATAR,MEM_TIME,TOTAL_STAR_NUM,TOTAL_REVIEWS)VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String GET_ALL_MEMBER = 
+			"SELECT MEM_ID,MEM_EMAIL,MEM_ACCOUNT,MEM_PASSWORD,MEM_NICKNAME,MEM_NAME,MEM_PHONE,MEM_GENDER,MEM_CITY,MEM_CITYAREA,MEM_ADDRESS,MEM_CODE,MEM_AVATAR,MEM_TIME,MEM_STATUS,MEM_NO_SPEAK,MEM_NO_POST,MEM_NO_GROUP,MEM_NO_JOINGROUP,TOTAL_STAR_NUM,TOTAL_REVIEWS FROM MEMBER order by MEM_ID";
+	private static final String GET_ONE_MEMBER = 
+			"SELECT MEM_EMAIL,MEM_ACCOUNT,MEM_PASSWORD,MEM_NICKNAME,MEM_NAME,MEM_PHONE,MEM_GENDER,MEM_CITY,MEM_CITYAREA,MEM_ADDRESS,MEM_CODE,MEM_AVATAR,MEM_TIME,MEM_STATUS,MEM_NO_SPEAK,MEM_NO_POST,MEM_NO_GROUP,MEM_NO_JOINGROUP,TOTAL_STAR_NUM,TOTAL_REVIEWS FROM MEMBER where MEM_ID = ?";
+	private static final String MEMBER_UPDATE = 
+			"UPDATE MEMBER set MEMBER_EMAIL = ?, MEM_PASSWORD = ?, MEN_NICKNAME = ?, MEM_NAME = ?, MEM_PHONE = ?, MEM_GENDER = ?, MEM_CITY = ?, MEM_CITYAREA = ? ,MEM_ADDRESS = ?, MEM_AVATAR = ?,  where MEM_ID = ?";
+	private static final String DELETE = 
+			"DELETE FROM MEMBER where MEM_ID = ?";
+	private static final String MEMBER_PERMISSION_UPDATE = 
+			"UPDATE MEMBER set MEMBER_STATUS = ?, MEM_NO_SPEAK = ?, MEM_NO_POST = ?, MEM_NO_GROUP = ?, MEM_NO_JOINGROUP = ? where MEM_ID = ?";
+	private static final String GET_ALL_ACCOUNT =
+			"SELECT 1 FROM MEMBER WHERE MEMBER_ACCOUNT = ?";
+	
 	@Override
 	public void insert(MemberVO memberVO) {
 		Connection con = null;
@@ -47,11 +55,8 @@ public class MemberDAO implements MemDAO_interface {
 			pstmt.setString(8, memberVO.getMemCity());
 			pstmt.setString(9, memberVO.getMemCityarea());
 			pstmt.setString(10, memberVO.getMemAddress());
-			pstmt.setString(11, memberVO.getMemCode());
-			pstmt.setBytes(12, memberVO.getMemAvatar());
-			pstmt.setDate(13, memberVO.getMemTime());
-			pstmt.setInt(14, memberVO.getTotalStarNum());
-			pstmt.setInt(15, memberVO.getTotalReviews());
+			pstmt.setBytes(11, memberVO.getMemAvatar());
+			pstmt.setDate(12, memberVO.getMemTime());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -91,9 +96,9 @@ public class MemberDAO implements MemDAO_interface {
 			pstmt.setString(8, memberVO.getMemCityarea());
 			pstmt.setString(9, memberVO.getMemAddress());
 			pstmt.setBytes(10, memberVO.getMemAvatar());
-			pstmt.setDate(11, memberVO.getMemTime());
-			pstmt.setInt(12, memberVO.getTotalStarNum());
-			pstmt.setInt(13, memberVO.getTotalReviews());
+//			pstmt.setDate(11, memberVO.getMemTime());
+//			pstmt.setInt(12, memberVO.getTotalStarNum());
+//			pstmt.setInt(13, memberVO.getTotalReviews());
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -216,8 +221,8 @@ public class MemberDAO implements MemDAO_interface {
 				memberVO.setMemNoPost(rs.getByte("MEM_NO_POST"));
 				memberVO.setMemNoGroup(rs.getByte("MEM_NO_GROUP"));
 				memberVO.setMemNoJoingroup(rs.getByte("MEM_NO_JOINGROUP"));
-				memberVO.setTotalStarNum(rs.getInt("TOTAL_STAR_NUM"));
-				memberVO.setTotalReviews(rs.getInt("TOTAL_REVIEWS"));
+//				memberVO.setTotalStarNum(rs.getInt("TOTAL_STAR_NUM"));
+//				memberVO.setTotalReviews(rs.getInt("TOTAL_REVIEWS"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -281,8 +286,8 @@ public class MemberDAO implements MemDAO_interface {
 				memberVO.setMemNoPost(rs.getByte("MEM_NO_POST"));
 				memberVO.setMemNoGroup(rs.getByte("MEM_NO_GROUP"));
 				memberVO.setMemNoJoingroup(rs.getByte("MEM_NO_JOINGROUP"));
-				memberVO.setTotalStarNum(rs.getInt("TOTAL_STAR_NUM"));
-				memberVO.setTotalReviews(rs.getInt("TOTAL_REVIEWS"));
+//				memberVO.setTotalStarNum(rs.getInt("TOTAL_STAR_NUM"));
+//				memberVO.setTotalReviews(rs.getInt("TOTAL_REVIEWS"));
 				list.add(memberVO);
 
 			}
@@ -313,6 +318,50 @@ public class MemberDAO implements MemDAO_interface {
 		}
 
 		return list;
+	}
+	public boolean isAccountExist(String memAccount) {
+		boolean exists = false;
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    try {
+	        con = ds.getConnection();
+	        pstmt = con.prepareStatement(GET_ALL_ACCOUNT);
+	        pstmt.setString(1, memAccount);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            exists = true; // 有資料就代表帳號存在
+	        }
+
+	    } catch (SQLException se) {
+	        throw new RuntimeException("A database error occurred: " + se.getMessage());
+	    } finally {
+	        if (rs != null) {
+	            try {
+	                rs.close();
+	            } catch (SQLException se) {
+	                se.printStackTrace(System.err);
+	            }
+	        }
+	        if (pstmt != null) {
+	            try {
+	                pstmt.close();
+	            } catch (SQLException se) {
+	                se.printStackTrace(System.err);
+	            }
+	        }
+	        if (con != null) {
+	            try {
+	                con.close();
+	            } catch (Exception e) {
+	                e.printStackTrace(System.err);
+	            }
+	        }
+	    }
+
+	    return exists;
 	}
 
 }
