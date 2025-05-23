@@ -24,6 +24,8 @@ public class MessageDAO implements MessageDAO_interface{
 	private static final String GET_ONE_STMT = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT WHERE MES_ID = ?";
 	private static final String DELETE = "DELETE FROM MESSAGE WHERE MES_ID";
 	private static final String UPDATE = "UPDATE MESSAGE SET MES_ID = ?, POST_ID = ?, MEM_ID = ?, MES_DATE = ?, MES_CONTENT = ?";
+	private static final String GET_BY_MEM_ID = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT FROM MESSAGE WHERE MES_ID = ? ORDER BY MES_ID";
+	private static final String GET_BY_POST_ID = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT FROM MESSAGE WHERE POST_ID = ? ORDER BY MES_ID";
 	
 	@Override
 	public void insert(MessageVO messageVO) {
@@ -236,15 +238,113 @@ public class MessageDAO implements MessageDAO_interface{
 	}
 	@Override
 	public List<MessageVO> findByMemId(Integer memId) {
+		List<MessageVO> List = new ArrayList<MessageVO>();
+		MessageVO messageVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
-		return null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_BY_MEM_ID);
+			pstmt.setInt(1, memId);						
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				messageVO = new MessageVO();
+				messageVO.setMesId(rs.getInt("MES_ID"));
+				messageVO.setPostId(rs.getInt("POST_ID"));
+				messageVO.setMemId(rs.getInt("MEM_ID"));
+				messageVO.setMesDate(rs.getTimestamp("MES_DATE"));
+				messageVO.setMesContent(rs.getString("MES_CONTENT"));
+				List.add(messageVO);
+				
+							
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if ( rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch(SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}	
+		
+		return List;
 	}
+		
 	@Override
 	public List<MessageVO> findByPostId(Integer postId) {
+		List<MessageVO> List = new ArrayList<MessageVO>();
+		MessageVO messageVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
-		return null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_BY_POST_ID);
+			pstmt.setInt(1, postId);						
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				messageVO = new MessageVO();
+				messageVO.setMesId(rs.getInt("MES_ID"));
+				messageVO.setPostId(rs.getInt("POST_ID"));
+				messageVO.setMemId(rs.getInt("MEM_ID"));
+				messageVO.setMesDate(rs.getTimestamp("MES_DATE"));
+				messageVO.setMesContent(rs.getString("MES_CONTENT"));
+				List.add(messageVO);
+				
+							
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if ( rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch(SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}	
+		
+		return List;
 	}
-
 	
 	
 	
