@@ -1,4 +1,4 @@
-package com.foodtimetest.message;
+package com.foodtimetest.message.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
