@@ -96,10 +96,10 @@
     	
     	<%--修改按鈕 --%>
     	<td>
-    		<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" style="margin-bottom: 0px;"> // 傳送給 /coupon/coupon.do 這支 Servlet 來處理。
-    			<input type="submit" value="修改"> //hidden使用者不需要看見（避免誤刪、誤改），但後端需要用
-    			<input type="hidden" name="couId" value="${couponVO.couId}"> //表單送出時將 couponVO.couId 傳給後端的 request.getParameter("couId")
-    			<input type="hidden" name="action" value="getOne_For_Update"></FORM> //	告訴 Servlet 處理getOne_For_Update 功能
+    		<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" style="margin-bottom: 0px;"> <%-- 傳送給 /coupon/coupon.do 這支 Servlet 來處理。--%> 
+    			<input type="submit" value="修改"> <%--hidden使用者不需要看見（避免誤刪、誤改），但後端需要用 --%>
+    			<input type="hidden" name="couId" value="${couponVO.couId}"> <%-- 表單送出時將 couponVO.couId 傳給後端的 request.getParameter("couId")--%>
+    			<input type="hidden" name="action" value="getOne_For_Update"></FORM> <%--告訴 Servlet 處理getOne_For_Update 功能--%>
     	</td>
     	<td>
     		<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" style="margin-bottom: 0px;">

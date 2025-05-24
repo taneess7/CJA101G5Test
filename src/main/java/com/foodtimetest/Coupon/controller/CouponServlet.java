@@ -101,7 +101,7 @@ public class CouponServlet extends HttpServlet {
 		}
 
 		// ****************優惠券修改- 接收修改後的資料並更新 DB
-		// ********************************************//
+		
 
 		if ("update".equals(action)) {// 來自update_emp_input.jsp的請求
 
@@ -251,7 +251,8 @@ public class CouponServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 		}
-
+		// *****************優惠券 刪除
+				// ****************************************************//
 		if ("delete".equals(action)) { // 來自listAllCoupon.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
