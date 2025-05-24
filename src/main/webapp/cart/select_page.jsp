@@ -3,97 +3,66 @@
 
 <html>
 <head>
-  <title>Cart: Home</title> //改成自己的功能名稱
+    <title>Cart: Home</title>
 
-  <style>
-    table#table-1 {
-      width: 450px;
-      background-color: #CCCCFF;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      border: 3px ridge Gray;
-      height: 80px;
-      text-align: center;
-    }
-    table#table-1 h4 {
-      color: red;
-      display: block;
-      margin-bottom: 1px;
-    }
-    h4 {
-      color: blue;
-      display: inline;
-    }
-  </style>
-
+    <style>
+        table#table-1 {
+            width: 450px;
+            background-color: #CCCCFF;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 3px ridge Gray;
+            height: 80px;
+            text-align: center;
+        }
+        table#table-1 h4 {
+            color: red;
+            display: block;
+            margin-bottom: 1px;
+        }
+        h4 {
+            color: blue;
+            display: inline;
+        }
+    </style>
 </head>
 <body bgcolor='white'>
 
 <table id="table-1">
-  <tr><td><h3>Cart: Home</h3><h4>( MVC )</h4></td></tr>//改成自己的功能名稱
+    <tr><td><h3>Cart: Home</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for Cart: Home</p>//改成自己的功能名稱
+<p>This is the Home page for Cart: Home</p>
 
 <h3>資料查詢:</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
-  <font style="color:red">請修正以下錯誤:</font>
-  <ul>
-    <c:forEach var="message" items="${errorMsgs}">
-      <li style="color:red">${message}</li>
-    </c:forEach>
-  </ul>
+    <font style="color:red">請修正以下錯誤:</font>
+    <ul>
+        <c:forEach var="message" items="${errorMsgs}">
+            <li style="color:red">${message}</li>
+        </c:forEach>
+    </ul>
 </c:if>
 
 <ul>
-  <li><a href='listAllCart.jsp'>List</a> all things  <br><br></li>
+    <li><a href='listAllCart.jsp'>List</a> all Cart Items<br><br></li>
 
-
-  <li>
-    <FORM METHOD="post" ACTION="cart/cart.do" >
-      <b>輸入購物車編號 (如1):</b>
-      <input type="text" name="shopId">
-      <input type="hidden" name="action" value="getOne_For_Display">
-      <input type="submit" value="送出">
-    </FORM>
-  </li>
-
-  <jsp:useBean id="cartSvc" scope="page" class="com.foodtimetest.cart.model.CartService" />
-
-  <li>
-    <FORM METHOD="post" ACTION="cart/cart.do" >
-      <b>請選擇購物車商品編號:</b>
-      <select size="1" name="shopId">
-        <c:forEach var="cartVO" items="${cartSvc.all}" >
-        <option value="${cartVO.shopId}">${cartVO.shopId}
-          </c:forEach>
-      </select>
-      <input type="hidden" name="action" value="getOne_For_Display">
-      <input type="submit" value="送出">
-    </FORM>
-  </li>
-
-  <li>
-    <FORM METHOD="post" ACTION="cart/cart.do" >
-      <b>選擇商品編號:</b>
-      <select size="1" name="prodId">
-        <c:forEach var="cartVO" items="${cartSvc.all}" >
-        <option value="${cartVO.shopId}">${cartVO.prodN}
-          </c:forEach>
-      </select>
-      <input type="hidden" name="action" value="getOne_For_Display">
-      <input type="submit" value="送出">
-    </FORM>
-  </li>
+    <li>
+        <FORM METHOD="post" ACTION="cart.do">
+            <b>輸入購物車編號 (如1):</b>
+            <input type="text" name="shopId">
+            <input type="hidden" name="action" value="getOne_For_Display">
+            <input type="submit" value="送出">
+        </FORM>
+    </li>
 </ul>
 
-
-<h3>員工管理</h3>
+<h3>購物車管理</h3>
 
 <ul>
-  <li><a href='addCart.jsp'>Add</a> a new Emp.</li>
+    <li><a href='addCart.jsp'>Add</a> a new Cart Item.</li>
 </ul>
 
 </body>

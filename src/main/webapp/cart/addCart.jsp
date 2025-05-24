@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.foodtimetest.cart.model.*"%>
 
-<% //見com.emp.controller.EmpServlet.java第238行存入req的empVO物件 (此為輸入格式有錯誤時的empVO物件)
+<% 
     CartVO cartVO = (CartVO) request.getAttribute("cartVO");
 %>
---<%= cartVO == null %>-- ${cartVO.deptno}--<!-- for line 100 -->
+
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -42,7 +42,6 @@
             padding: 1px;
         }
     </style>
-
 </head>
 <body bgcolor='white'>
 
@@ -65,27 +64,25 @@
     </ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="cart/cart.do" name="form1">
+<FORM METHOD="post" ACTION="cart.do" name="form1">
     <table>
-
         <tr>
             <td>會員編號:</td>
             <td><input type="TEXT" name="memId" value="<%= (cartVO==null)? "1" : cartVO.getMemId()%>" size="45"/></td>
         </tr>
         <tr>
             <td>商品編號:</td>
-            <td><input type="TEXT" name="prodId"   value="<%= (cartVO==null)? "1" : cartVO.getProdId()%>" size="45"/></td>
+            <td><input type="TEXT" name="prodId" value="<%= (cartVO==null)? "1" : cartVO.getProdId()%>" size="45"/></td>
         </tr>
         <tr>
             <td>商品數量:</td>
-            <td><input type="TEXT" name="prodN"   value="<%= (cartVO==null)? "1" : cartVO.getProdN()%>" size="45"/></td>
+            <td><input type="TEXT" name="prodN" value="<%= (cartVO==null)? "1" : cartVO.getProdN()%>" size="45"/></td>
         </tr>
-
     </table>
     <br>
     <input type="hidden" name="action" value="insert">
-    <input type="submit" value="送出新增"></FORM>
+    <input type="submit" value="送出新增">
+</FORM>
 
 </body>
-
 </html>

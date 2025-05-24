@@ -5,15 +5,14 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-    CartService cartSvc = new CartService();  //更改為自己的Service
+    CartService cartSvc = new CartService();
     List<CartVO> list = cartSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
 
-
 <html>
 <head>
-    <title>所有的商品資料 - listAllCart.jsp</title>
+    <title>所有的購物車資料 - listAllCart.jsp</title>
 
     <style>
         table#table-1 {
@@ -47,14 +46,13 @@
             text-align: center;
         }
     </style>
-
 </head>
 <body bgcolor='white'>
 
 <h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-1">
     <tr><td>
-        <h3>所有員工資料 - listAllEmp.jsp</h3>
+        <h3>所有購物車資料 - listAllCart.jsp</h3>
         <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
     </td></tr>
 </table>
@@ -64,30 +62,34 @@
         <th>購物車商品編號</th>
         <th>會員編號</th>
         <th>商品編號</th>
+        <th>商品數量</th>
+        <th>修改</th>
+        <th>刪除</th>
     </tr>
-    <%@ include file="page1.file" %>
-    <c:forEach var="cartVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-
+    
+    <c:forEach var="cartVO" items="${list}">
         <tr>
             <td>${cartVO.shopId}</td>
             <td>${cartVO.memId}</td>
             <td>${cartVO.prodId}</td>
+            <td>${cartVO.prodN}</td>
             <td>
-                <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/cart.do" style="margin-bottom: 0px;">
+                <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart.do" style="margin-bottom: 0px;">
                     <input type="submit" value="修改">
-                    <input type="hidden" name="shopId"  value="${cartVO.shopId}">
-                    <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+                    <input type="hidden" name="shopId" value="${cartVO.shopId}">
+                    <input type="hidden" name="action" value="getOne_For_Update">
+                </FORM>
             </td>
             <td>
-                <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/cart.do" style="margin-bottom: 0px;">
+                <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart.do" style="margin-bottom: 0px;">
                     <input type="submit" value="刪除">
-                    <input type="hidden" name="shopId"  value="${cartVO.shopId}">
-                    <input type="hidden" name="action" value="delete"></FORM>
+                    <input type="hidden" name="shopId" value="${cartVO.shopId}">
+                    <input type="hidden" name="action" value="delete">
+                </FORM>
             </td>
         </tr>
     </c:forEach>
 </table>
-<%@ include file="page2.file" %>
 
 </body>
 </html>

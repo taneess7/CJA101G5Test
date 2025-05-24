@@ -18,7 +18,7 @@ public class CartDAO implements CartDAO_interface {
     static {
         try {
             Context ctx = new InitialContext();
-            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB1");
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB3");
         } catch (NamingException e) {
             e.printStackTrace();
         }
