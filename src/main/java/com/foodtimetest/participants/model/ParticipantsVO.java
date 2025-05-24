@@ -9,15 +9,13 @@ public class ParticipantsVO implements Serializable {
 	private Integer memId;
 	private Integer gbId;
 	private String parPhone;
-	private String paeName;
+	private String parName;
 	private String parAddress;
 	private BigDecimal parLongitude;
 	private BigDecimal parLatitude;
 	private boolean isLeader;
 	private Integer parPurchaseQuantity;
 	private byte paymentStatus;
-	
-	
 	public Integer getParId() {
 		return parId;
 	}
@@ -42,11 +40,11 @@ public class ParticipantsVO implements Serializable {
 	public void setParPhone(String parPhone) {
 		this.parPhone = parPhone;
 	}
-	public String getPaeName() {
-		return paeName;
+	public String getParName() {
+		return parName;
 	}
-	public void setPaeName(String paeName) {
-		this.paeName = paeName;
+	public void setParName(String parName) {
+		this.parName = parName;
 	}
 	public String getParAddress() {
 		return parAddress;
@@ -84,6 +82,9 @@ public class ParticipantsVO implements Serializable {
 	public void setPaymentStatus(byte paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
+	
+	
+	
 	
 	
 	
