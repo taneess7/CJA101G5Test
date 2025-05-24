@@ -1,88 +1,70 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ page import="com.foodtimetest.cart.model.*"%>
 
 <% 
     CartVO cartVO = (CartVO) request.getAttribute("cartVO");
 %>
 
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>購物車商品資料新增 - addCart.jsp</title>
-
-    <style>
-        table#table-1 {
-            background-color: #CCCCFF;
-            border: 2px solid black;
-            text-align: center;
-        }
-        table#table-1 h4 {
-            color: red;
-            display: block;
-            margin-bottom: 1px;
-        }
-        h4 {
-            color: blue;
-            display: inline;
-        }
-    </style>
-
-    <style>
-        table {
-            width: 450px;
-            background-color: white;
-            margin-top: 1px;
-            margin-bottom: 1px;
-        }
-        table, th, td {
-            border: 0px solid #CCCCFF;
-        }
-        th, td {
-            padding: 1px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增購物車項目</title>
+    <link rel="stylesheet" href="css/modern-cart.css">
 </head>
-<body bgcolor='white'>
+<body>
+    <div class="container">
+        <!-- 頁面標題 -->
+        <div class="page-header">
+            <h1>➕ 新增購物車項目</h1>
+            <a href="select_page.jsp" class="nav-button">
+                🏠 回到首頁
+            </a>
+        </div>
 
-<table id="table-1">
-    <tr><td>
-        <h3>購物車商品資料新增 - addCart.jsp</h3></td><td>
-        <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">回首頁</a></h4>
-    </td></tr>
-</table>
+        <!-- 錯誤訊息 -->
+        <c:if test="${not empty errorMsgs}">
+            <div class="error-container">
+                <h4>⚠️ 請修正以下錯誤：</h4>
+                <ul class="error-list">
+                    <c:forEach var="message" items="${errorMsgs}">
+                        <li>${message}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
 
-<h3>資料新增:</h3>
+        <!-- 新增表單 -->
+        <div class="modern-form">
+            <h3>📝 填寫商品資訊</h3>
+            <form method="post" action="<%=request.getContextPath()%>/cart/cart.do">
+                <div class="form-group">
+                    <label for="memId">👤 會員編號</label>
+                    <input type="text" id="memId" name="memId" class="form-control" 
+                           value="<%= (cartVO==null)? "" : cartVO.getMemId()%>" 
+                           placeholder="請輸入會員編號" required>
+                </div>
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-    <font style="color:red">請修正以下錯誤:</font>
-    <ul>
-        <c:forEach var="message" items="${errorMsgs}">
-            <li style="color:red">${message}</li>
-        </c:forEach>
-    </ul>
-</c:if>
+                <div class="form-group">
+                    <label for="prodId">📦 商品編號</label>
+                    <input type="text" id="prodId" name="prodId" class="form-control" 
+                           value="<%= (cartVO==null)? "" : cartVO.getProdId()%>" 
+                           placeholder="請輸入商品編號" required>
+                </div>
 
-<FORM METHOD="post" ACTION="cart.do" name="form1">
-    <table>
-        <tr>
-            <td>會員編號:</td>
-            <td><input type="TEXT" name="memId" value="<%= (cartVO==null)? "1" : cartVO.getMemId()%>" size="45"/></td>
-        </tr>
-        <tr>
-            <td>商品編號:</td>
-            <td><input type="TEXT" name="prodId" value="<%= (cartVO==null)? "1" : cartVO.getProdId()%>" size="45"/></td>
-        </tr>
-        <tr>
-            <td>商品數量:</td>
-            <td><input type="TEXT" name="prodN" value="<%= (cartVO==null)? "1" : cartVO.getProdN()%>" size="45"/></td>
-        </tr>
-    </table>
-    <br>
-    <input type="hidden" name="action" value="insert">
-    <input type="submit" value="送出新增">
-</FORM>
+                <div class="form-group">
+                    <label for="prodN">🔢 商品數量</label>
+                    <input type="number" id="prodN" name="prodN" class="form-control" 
+                           value="<%= (cartVO==null)? "1" : cartVO.getProdN()%>" 
+                           min="1" placeholder="請輸入商品數量" required>
+                </div>
 
+                <input type="hidden" name="action" value="insert">
+                <button type="submit" class="btn btn-success">✅ 送出新增</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,115 +1,91 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%@ page import="com.foodtimetest.cart.model.*"%>
 
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-    <title>Cart: Home</title>
-
-    <style>
-        table#table-1 {
-            width: 450px;
-            background-color: #CCCCFF;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            border: 3px ridge Gray;
-            height: 80px;
-            text-align: center;
-        }
-        table#table-1 h4 {
-            color: red;
-            display: block;
-            margin-bottom: 1px;
-        }
-        h4 {
-            color: blue;
-            display: inline;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車管理系統</title>
+    <link rel="stylesheet" href="css/modern-cart.css">
 </head>
-<body bgcolor='white'>
+<body>
+    <div class="container">
+        <!-- 頁面標題 -->
+        <div class="page-header">
+            <h1>🛒 購物車管理系統</h1>
+            <p class="subtitle">現代化的購物車管理解決方案</p>
+        </div>
 
-<table id="table-1">
-    <tr><td><h3>Cart: Home</h3><h4>( MVC )</h4></td></tr>
-</table>
-
-<p>This is the Home page for Cart: Home</p>
-
-<h3>資料查詢:</h3>
-
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-    <font style="color:red">請修正以下錯誤:</font>
-    <ul>
-        <c:forEach var="message" items="${errorMsgs}">
-            <li style="color:red">${message}</li>
-        </c:forEach>
-    </ul>
-</c:if>
-
-<ul>
-    <li><a href='listAllCart.jsp'>List</a> all Cart Items<br><br></li>
-
-    <!-- 查詢方式一：輸入購物車編號 -->
-    <li>
-        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/cart.do">
-            <b>輸入購物車編號 (如1):</b>
-            <input type="text" name="shopId">
-            <input type="hidden" name="action" value="getOne_For_Display">
-            <input type="submit" value="送出">
-        </FORM>
-    </li>
-
-    <!-- 查詢方式二：選擇購物車編號 -->
-    <li>
-        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/cart.do">
-            <b>請選擇購物車商品編號:</b>
-            <select size="1" name="shopId">
-                <c:catch var="exception">
-                    <%
-                        CartService cartSvc = new CartService();
-                        java.util.List<CartVO> cartList = cartSvc.getAll();
-                        pageContext.setAttribute("cartList", cartList);
-                    %>
-                    <c:forEach var="cartVO" items="${cartList}">
-                        <option value="${cartVO.shopId}">${cartVO.shopId}</option>
+        <!-- 錯誤訊息 -->
+        <c:if test="${not empty errorMsgs}">
+            <div class="error-container">
+                <h4>⚠️ 請修正以下錯誤：</h4>
+                <ul class="error-list">
+                    <c:forEach var="message" items="${errorMsgs}">
+                        <li>${message}</li>
                     </c:forEach>
-                </c:catch>
-                <c:if test="${not empty exception}">
-                    <option value="">資料載入失敗</option>
-                </c:if>
-            </select>
-            <input type="hidden" name="action" value="getOne_For_Display">
-            <input type="submit" value="送出">
-        </FORM>
-    </li>
+                </ul>
+            </div>
+        </c:if>
 
-    <!-- 查詢方式三：輸入會員編號 -->
-    <li>
-        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/cart.do">
-            <b>輸入會員編號:</b>
-            <input type="text" name="memId">
-            <input type="hidden" name="action" value="getOne_For_Display">
-            <input type="submit" value="送出">
-        </FORM>
-    </li>
+        <!-- 快速操作 -->
+        <div class="card">
+            <h3>📊 快速操作</h3>
+            <div style="margin-top: 20px;">
+                <a href='listAllCart.jsp' class="btn btn-primary" style="margin-right: 15px;">
+                    📋 查看所有購物車項目
+                </a>
+                <a href='addCart.jsp' class="btn btn-success">
+                    ➕ 新增購物車項目
+                </a>
+            </div>
+        </div>
 
-    <!-- 查詢方式四：會員編號+商品編號 -->
-    <li>
-        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/cart.do">
-            <b>會員編號:</b> <input type="text" name="memId" size="10">
-            <b>商品編號:</b> <input type="text" name="prodId" size="10">
-            <input type="hidden" name="action" value="getOne_For_Display">
-            <input type="submit" value="送出">
-        </FORM>
-    </li>
-</ul>
+        <!-- 搜尋功能 -->
+        <div class="card">
+            <h3>🔍 資料查詢</h3>
+            <div class="search-section">
+                <!-- 查詢方式一 -->
+                <div class="search-card">
+                    <h4>依購物車編號查詢</h4>
+                    <form method="post" action="<%=request.getContextPath()%>/cart/cart.do">
+                        <div class="form-group">
+                            <input type="text" name="shopId" class="form-control" placeholder="請輸入購物車編號 (例如: 1)">
+                        </div>
+                        <input type="hidden" name="action" value="getOne_For_Display">
+                        <button type="submit" class="btn btn-primary">🔍 查詢</button>
+                    </form>
+                </div>
 
-<h3>購物車管理</h3>
+                <!-- 查詢方式二 -->
+                <div class="search-card">
+                    <h4>依會員編號查詢</h4>
+                    <form method="post" action="<%=request.getContextPath()%>/cart/cart.do">
+                        <div class="form-group">
+                            <input type="text" name="memId" class="form-control" placeholder="請輸入會員編號">
+                        </div>
+                        <input type="hidden" name="action" value="getOne_For_Display">
+                        <button type="submit" class="btn btn-primary">🔍 查詢</button>
+                    </form>
+                </div>
 
-<ul>
-    <li><a href='addCart.jsp'>Add</a> a new Cart Item.</li>
-</ul>
-
+                <!-- 查詢方式三 -->
+                <div class="search-card">
+                    <h4>組合查詢</h4>
+                    <form method="post" action="<%=request.getContextPath()%>/cart/cart.do">
+                        <div class="form-group">
+                            <input type="text" name="memId" class="form-control" placeholder="會員編號" style="margin-bottom: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="prodId" class="form-control" placeholder="商品編號">
+                        </div>
+                        <input type="hidden" name="action" value="getOne_For_Display">
+                        <button type="submit" class="btn btn-primary">🔍 查詢</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
