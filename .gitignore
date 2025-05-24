@@ -2,6 +2,7 @@
 .mvn/
 bin/
 target/
+out/
 .classpath
 .project
 *.idea
