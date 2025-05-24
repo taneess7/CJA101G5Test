@@ -7,7 +7,9 @@
 <%
 CouponVO couponVO = (CouponVO) request.getAttribute("couponVO");//	把取出的 Object 強制轉型成 CouponVO 類別
 %>
---<%=couponVO == null%>-- ${couponVO.couId}
+--<%= couponVO == null%>--${couponVO.couId}
+
+
 <%
 // 只要有輸入資料按送出，上面那行就會變成false+selected編號
 %>
@@ -60,8 +62,8 @@ th, td {
 			<td>
 				<h3>優惠券資料新增 - addCoupon.jsp</h3>
 				<h4>
-					<a href="select_page.jsp">回首頁 <img src="images/tomcat.png"
-						width="100" height="100" border="0">
+					<img src="images/tomcat.png"
+						width="50" height="50" border="0"><br><a href="select_page.jsp">回首頁 
 					</a>
 				</h4>
 			</td>
@@ -73,69 +75,60 @@ th, td {
 	<c:if test="${not empty errorMsgs}">
 		<span style="color: red">請修正以下錯誤:</span>
 		<ul>
-			<c:forEach var="message" items="${errorMsgs}">  //是從 Servlet 傳來的 List
+			<c:forEach var="message" items="${errorMsgs}"><%--是從 Servlet 傳來的 List --%>  
 			<li style="color: red">${message}</li>
 			</c:forEach>
 		</ul>
 	</c:if>
 
 	<FORM METHOD="post"
-		ACTION="${pageContext.request.contextPath}/coupon/coupon.do"
-		name="formm1"></FORM>
+		ACTION="coupon.do"
+		name="formm1">
 	<table>
 
 		<tr>
 			<td>店家編號:</td>
 			<td><input type="text" name="storId"
-				value="<%=(couponVO == null) ? "請填寫編號" : couponVO.getStorId()%>"
+				value="<%=(couponVO == null) ? "1" : couponVO.getStorId()%>"
 				size="45" /></td>
 		</tr>
 		<tr>
 			<td>優惠券類型:</td>
 			<td><input type="text" name="couType"
-				value="<%=(couponVO == null) ? "請填寫優惠券類型" : couponVO.getCouType()%>"
+				value="<%=(couponVO == null) ? "新開幕" : couponVO.getCouType()%>"
 				size="45" /></td>
 		</tr>
 		<tr>
 			<td>優惠券說明:</td>
 			<td><input type="text" name="couDes"
-				value="<%=(couponVO == null) ? "請填寫說明" : couponVO.getCouDes()%>"
+				value="<%=(couponVO == null) ? "買500送500" : couponVO.getCouDes()%>"
 				size="45" /></td>
 		</tr>
 		<tr>
-			<td>最低消費金額限制</td>
-			<td><input type="text" name="couMinOrd"
-				value="<%=(couponVO == null) ? "0" : couponVO.getCouMinOrd()%>"
+			<td>最低消費金額限制:</td>
+			<td><input type="text" name="couMinOrd" 
+				value="<%=(couponVO == null) ? "500" : couponVO.getCouMinOrd()%>"
 				size="45" /></td>
 		</tr>
 		<tr>
-			<td>使用期限</td>
+			<td>使用期限:</td>
 			<td><input type="text" name="couDate" id="c_date"></td>
 		</tr>
-
-		<%-- 下拉選單，動態抓店家資料 StoreService查詢getall的method，取出店家物件 --%>
-		<jsp:useBean id="storeSvc" scope="page"
-			class="com.foodtimetest.store.model.StoreService" />
-		<tr>
-			<td>店家:<font color=red><b>*</b></font></td>
-			<td><select size="1" name="storId">
-					<c:forEach var="storeVO" items=${storeSvc.all }> //呼叫該物件的 getAll() 方法或對應的 getter 屬性
-				<option value="${storeVO.storId}"
-							${(couponVO.storId==storeVO.storId)? "selected": ''}>
-							${storeVO.storName}</option>
-						<%-- 			<option value="${storeVO.storId}" --%>
-						<%--   				<c:if test="${couponVO.storId == storeVO.storId}">selected</c:if>> --%>
-						<%--  				 ${storeVO.storName} --%>
-						<!-- 			</option>	 -->
-
-					</c:forEach>
-			</select></td>
-		</tr>
+		
+<%--店家選單 --%>	
+<%-- <jsp:useBean id="storeSvc" scope="page" class="com.foodtimetest.store.model.StoreService" /> --%>
+<!-- 	<tr> -->
+<!-- 		<td>店家:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="storId"> -->
+<%-- 			<c:forEach var="storeVO" items="${storeSvc.all}"> --%>
+<%-- 				<option value="${storeVO.storId}" ${(couponVO.storId==storeVO.storId)?'selected':'' } >${storeVO.storName}</option> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select></td> -->
+<!-- 	</tr> -->
 	</table>
 	<br>
 	<input type="hidden" name="action" value="insert">
-	<input type="hidden" name="action" value="送出新增">
-	</FORM>
+	<input type="submit" name="action" value="送出新增"></FORM>
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 

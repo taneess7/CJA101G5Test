@@ -89,16 +89,18 @@
 		
 		<td><input type="TEXT" name="couDate" value="<%=couponVO.getCouDate()%>" size="45" id="cou_date"/></td>
 	</tr>
-	
-	<jsp:useBean id="couponSvc" scope="page" class="com.foodtimetest.store.model.StoreService" />
-	<tr>
-		<td>店家:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="couId">
-			<c:forEach var="couponVO" items="${couponSvc.all}">
-				<option value="${couponVO.couId}" ${(couponVO.storId==StoreVO.storId)?'selected':'' } >${storeVO.storName}</option>
-			</c:forEach>
-		</select></td>
-	</tr>
+
+
+<%--店家選單 --%>	
+<%-- 	<jsp:useBean id="storeSvc" scope="page" class="com.foodtimetest.store.model.StoreService" /> --%>
+<!-- 	<tr> -->
+<!-- 		<td>店家:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="storId"> -->
+<%-- 			<c:forEach var="storeVO" items="${storeSvc.all}"> --%>
+<%-- 				<option value="${storeVO.storId}" ${(couponVO.storId==storeVO.storId)?'selected':'' } >${storeVO.storName}</option> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select></td> -->
+<!-- 	</tr> -->
 
 </table>
 <br>
