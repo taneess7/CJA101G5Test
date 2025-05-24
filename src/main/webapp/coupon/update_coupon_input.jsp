@@ -1,10 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.foodtimetest.Coupon.model.*"%>
+<%@ page import="com.foodtimetest.store.model.*"%>
 
 <%--(此為從資料庫取出的couponVO, 也可以是輸入格式有錯誤時的couponVO物件)--%> 
 <%  CouponVO couponVO = (CouponVO) request.getAttribute("couponVO");%>
-
+<%  StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");%>
 --<%= couponVO==null %>--  ${couponVO.storId} 
 <%// 只要有輸入資料按送出，上面那行就會變成false+selected編號%>
 <html>
@@ -69,6 +70,12 @@
 <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" name="form1">
 <table>
 	<tr>
+		<td>店家:<font color=red><b>*</b></font></td>
+		<td><%=couponVO.getStorId()%></td>
+		<td><input type="hidden" name="storId" value="<%=couponVO.getStorId()%>"/></td> 
+	</tr>
+	
+	<tr>
 		<td>優惠券編號:<font color=red><b>*</b></font></td>
 		<td><%=couponVO.getCouId()%></td>
 	</tr>
@@ -91,7 +98,6 @@
 	</tr>
 
 
-<%--店家選單 --%>	
 <%-- 	<jsp:useBean id="storeSvc" scope="page" class="com.foodtimetest.store.model.StoreService" /> --%>
 <!-- 	<tr> -->
 <!-- 		<td>店家:<font color=red><b>*</b></font></td> -->

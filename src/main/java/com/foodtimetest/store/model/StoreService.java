@@ -35,7 +35,8 @@ public class StoreService {
 		storeVO.setStorReportCount(storReportCount);
 		storeVO.setStarNum(starNum);
 		storeVO.setReviews(reviews);
-
+		dao.insert(storeVO);
+		
 		return storeVO;
 	}
 
@@ -61,7 +62,8 @@ public class StoreService {
 		storeVO.setStorReportCount(storReportCount);
 		storeVO.setStarNum(starNum);
 		storeVO.setReviews(reviews);
-
+		
+		dao.update(storeVO);
 
 		return storeVO;
 	}

@@ -20,6 +20,7 @@ public class CouponService {
 		couponVO.setCouType(couType);
 		couponVO.setCouMinOrd(couMinOrd);
 		couponVO.setCouDate(couDate);
+		dao.insert(couponVO);
 
 		return couponVO;
 	}
@@ -35,7 +36,8 @@ public class CouponService {
 		couponVO.setCouType(couType);
 		couponVO.setCouMinOrd(couMinOrd);
 		couponVO.setCouDate(couDate);
-
+		dao.update(couponVO);
+		
 		return couponVO;
 	}
 
