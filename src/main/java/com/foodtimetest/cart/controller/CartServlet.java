@@ -49,9 +49,33 @@ public class CartServlet extends HttpServlet {
             req.setAttribute("errorMsgs", errorMsgs);
 
             /* ************************** 1.接收請求參數 - 輸入格式的錯誤處理 ********************* */
-            Integer shopId = validateIntegerParameter(req, "shopId", errorMsgs, "商店編號格式不正確");
-            Integer memId = validateIntegerParameter(req, "memId", errorMsgs, "會員編號格式不正確");
-            Integer prodId = validateIntegerParameter(req, "prodId", errorMsgs, "商品編號格式不正確");
+            
+            // 修正：只驗證有提供的參數，允許其他參數為空
+            Integer shopId = null;
+            Integer memId = null;
+            Integer prodId = null;
+            
+            String shopIdStr = req.getParameter("shopId");
+            String memIdStr = req.getParameter("memId");
+            String prodIdStr = req.getParameter("prodId");
+            
+            // 只驗證有提供且不為空的參數
+            if (shopIdStr != null && !shopIdStr.trim().isEmpty()) {
+                shopId = validateIntegerParameter(req, "shopId", errorMsgs, "商店編號格式不正確");
+            }
+            
+            if (memIdStr != null && !memIdStr.trim().isEmpty()) {
+                memId = validateIntegerParameter(req, "memId", errorMsgs, "會員編號格式不正確");
+            }
+            
+            if (prodIdStr != null && !prodIdStr.trim().isEmpty()) {
+                prodId = validateIntegerParameter(req, "prodId", errorMsgs, "商品編號格式不正確");
+            }
+            
+            // 確保至少有一個查詢條件
+            if (shopId == null && memId == null && prodId == null) {
+                errorMsgs.add("請至少提供一個查詢條件");
+            }
 
             if (!errorMsgs.isEmpty()) {
                 RequestDispatcher failureView = req.getRequestDispatcher("/cart/select_page.jsp");
@@ -61,7 +85,20 @@ public class CartServlet extends HttpServlet {
 
             /* ************************** 2.開始查詢資料 **************************************** */
             CartService cartSvc = new CartService();
-            CartVO cartVO = cartSvc.getOneCart(shopId);
+            CartVO cartVO = null;
+            
+            // 根據提供的參數選擇查詢方法
+            if (shopId != null) {
+                cartVO = cartSvc.getOneCart(shopId);
+            } else if (memId != null && prodId != null) {
+                cartVO = cartSvc.getByMemIdAndProdId(memId, prodId);
+            } else if (memId != null) {
+                // 如果只有會員ID，取該會員的第一筆購物車資料
+                List<CartVO> cartList = cartSvc.getByMemId(memId);
+                if (!cartList.isEmpty()) {
+                    cartVO = cartList.get(0);
+                }
+            }
             
             if (cartVO == null) {
                 errorMsgs.add("查無資料");
@@ -79,6 +116,7 @@ public class CartServlet extends HttpServlet {
             RequestDispatcher successView = req.getRequestDispatcher(url);
             successView.forward(req, res);
         }
+
 
         //==================================== 來自listAllCart.jsp的請求 ====================================================================
         if ("getOne_For_Update".equals(action)) {

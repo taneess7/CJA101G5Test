@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ page import="com.foodtimetest.cart.model.*"%>
 
 <html>
 <head>
@@ -49,10 +50,55 @@
 <ul>
     <li><a href='listAllCart.jsp'>List</a> all Cart Items<br><br></li>
 
+    <!-- 查詢方式一：輸入購物車編號 -->
     <li>
         <FORM METHOD="post" ACTION="cart.do">
             <b>輸入購物車編號 (如1):</b>
             <input type="text" name="shopId">
+            <input type="hidden" name="action" value="getOne_For_Display">
+            <input type="submit" value="送出">
+        </FORM>
+    </li>
+
+    <!-- 查詢方式二：選擇購物車編號 -->
+    <li>
+        <FORM METHOD="post" ACTION="cart.do">
+            <b>請選擇購物車商品編號:</b>
+            <select size="1" name="shopId">
+                <c:catch var="exception">
+                    <%
+                        CartService cartSvc = new CartService();
+                        java.util.List<CartVO> cartList = cartSvc.getAll();
+                        pageContext.setAttribute("cartList", cartList);
+                    %>
+                    <c:forEach var="cartVO" items="${cartList}">
+                        <option value="${cartVO.shopId}">${cartVO.shopId}</option>
+                    </c:forEach>
+                </c:catch>
+                <c:if test="${not empty exception}">
+                    <option value="">資料載入失敗</option>
+                </c:if>
+            </select>
+            <input type="hidden" name="action" value="getOne_For_Display">
+            <input type="submit" value="送出">
+        </FORM>
+    </li>
+
+    <!-- 查詢方式三：輸入會員編號 -->
+    <li>
+        <FORM METHOD="post" ACTION="cart.do">
+            <b>輸入會員編號:</b>
+            <input type="text" name="memId">
+            <input type="hidden" name="action" value="getOne_For_Display">
+            <input type="submit" value="送出">
+        </FORM>
+    </li>
+
+    <!-- 查詢方式四：會員編號+商品編號 -->
+    <li>
+        <FORM METHOD="post" ACTION="cart.do">
+            <b>會員編號:</b> <input type="text" name="memId" size="10">
+            <b>商品編號:</b> <input type="text" name="prodId" size="10">
             <input type="hidden" name="action" value="getOne_For_Display">
             <input type="submit" value="送出">
         </FORM>
