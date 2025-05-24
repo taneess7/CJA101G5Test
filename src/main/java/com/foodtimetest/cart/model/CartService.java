@@ -20,9 +20,10 @@ public class CartService {
         return cartVO;
     }
 
-    // 修改購物車商品
-    public CartVO updateCart(Integer memId, Integer prodId,Integer prodN) {
+    // 修改購物車商品 - 修正：加入 shopId 參數
+    public CartVO updateCart(Integer shopId, Integer memId, Integer prodId, Integer prodN) {
         CartVO cartVO = new CartVO();
+        cartVO.setShopId(shopId);  
         cartVO.setMemId(memId);
         cartVO.setProdId(prodId);
         cartVO.setProdN(prodN);

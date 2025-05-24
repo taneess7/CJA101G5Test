@@ -1,100 +1,91 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <title>Cart: Home</title> //改成自己的功能名稱
-
-  <style>
-    table#table-1 {
-      width: 450px;
-      background-color: #CCCCFF;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      border: 3px ridge Gray;
-      height: 80px;
-      text-align: center;
-    }
-    table#table-1 h4 {
-      color: red;
-      display: block;
-      margin-bottom: 1px;
-    }
-    h4 {
-      color: blue;
-      display: inline;
-    }
-  </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車管理系統</title>
+    <link rel="stylesheet" href="css/modern-cart.css">
 </head>
-<body bgcolor='white'>
+<body>
+    <div class="container">
+        <!-- 頁面標題 -->
+        <div class="page-header">
+            <h1>🛒 購物車管理系統</h1>
+            <p class="subtitle">現代化的購物車管理解決方案</p>
+        </div>
 
-<table id="table-1">
-  <tr><td><h3>Cart: Home</h3><h4>( MVC )</h4></td></tr>//改成自己的功能名稱
-</table>
+        <!-- 錯誤訊息 -->
+        <c:if test="${not empty errorMsgs}">
+            <div class="error-container">
+                <h4>⚠️ 請修正以下錯誤：</h4>
+                <ul class="error-list">
+                    <c:forEach var="message" items="${errorMsgs}">
+                        <li>${message}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
 
-<p>This is the Home page for Cart: Home</p>//改成自己的功能名稱
+        <!-- 快速操作 -->
+        <div class="card">
+            <h3>📊 快速操作</h3>
+            <div style="margin-top: 20px;">
+                <a href='listAllCart.jsp' class="btn btn-primary" style="margin-right: 15px;">
+                    📋 查看所有購物車項目
+                </a>
+                <a href='addCart.jsp' class="btn btn-success">
+                    ➕ 新增購物車項目
+                </a>
+            </div>
+        </div>
 
-<h3>資料查詢:</h3>
+        <!-- 搜尋功能 -->
+        <div class="card">
+            <h3>🔍 資料查詢</h3>
+            <div class="search-section">
+                <!-- 查詢方式一 -->
+                <div class="search-card">
+                    <h4>依購物車編號查詢</h4>
+                    <form method="post" action="<%=request.getContextPath()%>/cart/cart.do">
+                        <div class="form-group">
+                            <input type="text" name="shopId" class="form-control" placeholder="請輸入購物車編號 (例如: 1)">
+                        </div>
+                        <input type="hidden" name="action" value="getOne_For_Display">
+                        <button type="submit" class="btn btn-primary">🔍 查詢</button>
+                    </form>
+                </div>
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-  <font style="color:red">請修正以下錯誤:</font>
-  <ul>
-    <c:forEach var="message" items="${errorMsgs}">
-      <li style="color:red">${message}</li>
-    </c:forEach>
-  </ul>
-</c:if>
+                <!-- 查詢方式二 -->
+                <div class="search-card">
+                    <h4>依會員編號查詢</h4>
+                    <form method="post" action="<%=request.getContextPath()%>/cart/cart.do">
+                        <div class="form-group">
+                            <input type="text" name="memId" class="form-control" placeholder="請輸入會員編號">
+                        </div>
+                        <input type="hidden" name="action" value="getOne_For_Display">
+                        <button type="submit" class="btn btn-primary">🔍 查詢</button>
+                    </form>
+                </div>
 
-<ul>
-  <li><a href='listAllCart.jsp'>List</a> all things  <br><br></li>
-
-
-  <li>
-    <FORM METHOD="post" ACTION="cart/cart.do" >
-      <b>輸入購物車編號 (如1):</b>
-      <input type="text" name="shopId">
-      <input type="hidden" name="action" value="getOne_For_Display">
-      <input type="submit" value="送出">
-    </FORM>
-  </li>
-
-  <jsp:useBean id="cartSvc" scope="page" class="com.foodtimetest.cart.model.CartService" />
-
-  <li>
-    <FORM METHOD="post" ACTION="cart/cart.do" >
-      <b>請選擇購物車商品編號:</b>
-      <select size="1" name="shopId">
-        <c:forEach var="cartVO" items="${cartSvc.all}" >
-        <option value="${cartVO.shopId}">${cartVO.shopId}
-          </c:forEach>
-      </select>
-      <input type="hidden" name="action" value="getOne_For_Display">
-      <input type="submit" value="送出">
-    </FORM>
-  </li>
-
-  <li>
-    <FORM METHOD="post" ACTION="cart/cart.do" >
-      <b>選擇商品編號:</b>
-      <select size="1" name="prodId">
-        <c:forEach var="cartVO" items="${cartSvc.all}" >
-        <option value="${cartVO.shopId}">${cartVO.prodN}
-          </c:forEach>
-      </select>
-      <input type="hidden" name="action" value="getOne_For_Display">
-      <input type="submit" value="送出">
-    </FORM>
-  </li>
-</ul>
-
-
-<h3>員工管理</h3>
-
-<ul>
-  <li><a href='addCart.jsp'>Add</a> a new Emp.</li>
-</ul>
-
+                <!-- 查詢方式三 -->
+                <div class="search-card">
+                    <h4>組合查詢</h4>
+                    <form method="post" action="<%=request.getContextPath()%>/cart/cart.do">
+                        <div class="form-group">
+                            <input type="text" name="memId" class="form-control" placeholder="會員編號" style="margin-bottom: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="prodId" class="form-control" placeholder="商品編號">
+                        </div>
+                        <input type="hidden" name="action" value="getOne_For_Display">
+                        <button type="submit" class="btn btn-primary">🔍 查詢</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

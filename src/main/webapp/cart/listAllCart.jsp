@@ -1,93 +1,85 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.foodtimetest.cart.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-    CartService cartSvc = new CartService();  //更改為自己的Service
+    CartService cartSvc = new CartService();
     List<CartVO> list = cartSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
 
-
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-    <title>所有的商品資料 - listAllCart.jsp</title>
-
-    <style>
-        table#table-1 {
-            background-color: #CCCCFF;
-            border: 2px solid black;
-            text-align: center;
-        }
-        table#table-1 h4 {
-            color: red;
-            display: block;
-            margin-bottom: 1px;
-        }
-        h4 {
-            color: blue;
-            display: inline;
-        }
-    </style>
-
-    <style>
-        table {
-            width: 800px;
-            background-color: white;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-        table, th, td {
-            border: 1px solid #CCCCFF;
-        }
-        th, td {
-            padding: 5px;
-            text-align: center;
-        }
-    </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>所有購物車資料</title>
+    <link rel="stylesheet" href="css/modern-cart.css">
 </head>
-<body bgcolor='white'>
+<body>
+    <div class="container">
+        <!-- 頁面標題 -->
+        <div class="page-header">
+            <h1>📋 所有購物車資料</h1>
+            <a href="select_page.jsp" class="nav-button">
+                🏠 回到首頁
+            </a>
+        </div>
 
-<h4>此頁練習採用 EL 的寫法取值:</h4>
-<table id="table-1">
-    <tr><td>
-        <h3>所有員工資料 - listAllEmp.jsp</h3>
-        <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
-    </td></tr>
-</table>
+        <!-- 統計資訊 -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">${list.size()}</div>
+                <div class="stat-label">總購物車項目</div>
+            </div>
+        </div>
 
-<table>
-    <tr>
-        <th>購物車商品編號</th>
-        <th>會員編號</th>
-        <th>商品編號</th>
-    </tr>
-    <%@ include file="page1.file" %>
-    <c:forEach var="cartVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-
-        <tr>
-            <td>${cartVO.shopId}</td>
-            <td>${cartVO.memId}</td>
-            <td>${cartVO.prodId}</td>
-            <td>
-                <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/cart.do" style="margin-bottom: 0px;">
-                    <input type="submit" value="修改">
-                    <input type="hidden" name="shopId"  value="${cartVO.shopId}">
-                    <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-            </td>
-            <td>
-                <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/cart/cart.do" style="margin-bottom: 0px;">
-                    <input type="submit" value="刪除">
-                    <input type="hidden" name="shopId"  value="${cartVO.shopId}">
-                    <input type="hidden" name="action" value="delete"></FORM>
-            </td>
-        </tr>
-    </c:forEach>
-</table>
-<%@ include file="page2.file" %>
-
+        <!-- 資料表格 -->
+        <div class="card">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>🛒 購物車編號</th>
+                        <th>👤 會員編號</th>
+                        <th>📦 商品編號</th>
+                        <th>🔢 商品數量</th>
+                        <th>⚙️ 操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="cartVO" items="${list}">
+                        <tr>
+                            <td><strong>${cartVO.shopId}</strong></td>
+                            <td>${cartVO.memId}</td>
+                            <td>${cartVO.prodId}</td>
+                            <td>
+                                <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                           color: white; padding: 5px 10px; border-radius: 15px; font-weight: 600;">
+                                    ${cartVO.prodN}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <form method="post" action="<%=request.getContextPath()%>/cart/cart.do" class="action-form">
+                                        <input type="hidden" name="shopId" value="${cartVO.shopId}">
+                                        <input type="hidden" name="action" value="getOne_For_Update">
+                                        <button type="submit" class="btn btn-warning btn-sm">✏️ 修改</button>
+                                    </form>
+                                    
+                                    <form method="post" action="<%=request.getContextPath()%>/cart/cart.do" class="action-form">
+                                        <input type="hidden" name="shopId" value="${cartVO.shopId}">
+                                        <input type="hidden" name="action" value="delete">
+                                        <button type="submit" class="btn btn-danger btn-sm" 
+                                                onclick="return confirm('確定要刪除這個項目嗎？')">🗑️ 刪除</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
