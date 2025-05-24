@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <jsp:useBean id="couponSvc" scope="page" class="com.foodtimetest.store.model.StoreService" />
+ 
  
 <html>
 <head>
@@ -49,7 +49,7 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllEmp.jsp'>List</a> all Coupons.  <br><br></li>
+  <li><a href='listAllCoupon.jsp'>List</a> all Coupons.  <br><br></li>
   
   
   <li>
@@ -61,10 +61,10 @@
     </FORM>
   </li>
 
- 
+ <jsp:useBean id="couponSvc" scope="page" class="com.foodtimetest.Coupon.model.CouponService" />
    
   <li>
-     <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" >
+     <FORM METHOD="post" ACTION="coupon.do" >
        <b>選擇優惠券編號:</b>
        <select size="1" name="couId">
          <c:forEach var="couponVO" items="${couponSvc.all}" > 
@@ -77,7 +77,7 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" >
+     <FORM METHOD="post" ACTION="coupon.do" >
        <b>選擇優惠券類型:</b>
        <select size="1" name="couId">
          <c:forEach var="couponVO" items="${couponSvc.all}" > 
@@ -94,7 +94,7 @@
 <h3>優惠券管理</h3>
 
 <ul>
-  <li><a href='addEmp.jsp'>Add</a> a new Coupon.</li>
+  <li><a href='addCoupon.jsp'>Add</a> a new Coupon.</li>
 </ul>
 
 </body>
