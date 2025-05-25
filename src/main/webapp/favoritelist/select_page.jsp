@@ -1,14 +1,9 @@
-<!--  
-
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
 <head>
-<title>IBM Emp: Home</title>
-
-<style>
-  table#table-1 {
+<title>foodtime FavoriteList: Home</title><style> table#table-1 {
 	width: 450px;
 	background-color: #CCCCFF;
 	margin-top: 5px;
@@ -32,10 +27,10 @@
 <body bgcolor='white'>
 
 <table id="table-1">
-   <tr><td><h3>IBM Emp: Home</h3><h4>( MVC )</h4></td></tr>
+   <tr><td><h3>foodtime FavoriteList: Home</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for IBM Emp: Home</p>
+<p>This is the Home page for foodtime FavoriteList: Home</p>
 
 <h3>資料查詢:</h3>
 	
@@ -50,26 +45,26 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllEmp.jsp'>List</a> all Emps.  <br><br></li>
+  <li><a href='listAllFavoriteList.jsp'>List</a> all FavoriteLists.  <br><br></li>
   
   
   <li>
     <FORM METHOD="post" ACTION="emp.do" >
-        <b>輸入員工編號 (如7001):</b>
-        <input type="text" name="empno">
+        <b>輸入會員編號 (如5):</b>
+        <input type="text" name="memId">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
     </FORM>
   </li>
 
-  <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+  <jsp:useBean id="favoriteListSvc" scope="page" class="com.foodtimetest.memfavlist.FavoriteListService" />
    
   <li>
-     <FORM METHOD="post" ACTION="emp.do" >
-       <b>選擇員工編號:</b>
-       <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.empno}
+     <FORM METHOD="post" ACTION="favoriteList.do" >
+       <b>選擇會員編號:</b>
+       <select size="1" name="memId">
+         <c:forEach var="favoriteListVO" items="${favoriteListSvc.all}" > 
+          <option value="${favoriteListVO.memId}">${favoriteList.memId}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -79,10 +74,10 @@
   
   <li>
      <FORM METHOD="post" ACTION="emp.do" >
-       <b>選擇員工姓名:</b>
-       <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.ename}
+       <b>選擇商品編號:</b>
+       <select size="1" name="prodId">
+         <c:forEach var="favoriteListVO" items="${favoriteListSvc.all}" > 
+          <option value="${favoriteListVO.prodId}">${favoriteListVO.prodId}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -95,10 +90,8 @@
 <h3>員工管理</h3>
 
 <ul>
-  <li><a href='addEmp.jsp'>Add</a> a new Emp.</li>
+  <li><a href='addFavoriteList.jsp'>Add</a> a new FavoriteList.</li>
 </ul>
 
 </body>
 </html>
-
--->
