@@ -1,7 +1,7 @@
 package com.foodtimetest.groupbuyingcases.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 
 public class GroupBuyingCasesVO implements Serializable{
@@ -19,7 +19,6 @@ public class GroupBuyingCasesVO implements Serializable{
 	private Integer gbMinProductQuantity;
 	private String cancelReason;
 	private Integer cumulativePurchaseQuantity;
-	
 	public Integer getGbId() {
 		return gbId;
 	}
@@ -38,11 +37,11 @@ public class GroupBuyingCasesVO implements Serializable{
 	public void setGbProdId(Integer gbProdId) {
 		this.gbProdId = gbProdId;
 	}
-	public Integer getMenId() {
+	public Integer getMemId() {
 		return memId;
 	}
-	public void setMenId(Integer menId) {
-		this.memId = menId;
+	public void setMemId(Integer memId) {
+		this.memId = memId;
 	}
 	public Date getGbStartTime() {
 		return gbStartTime;
@@ -99,6 +98,7 @@ public class GroupBuyingCasesVO implements Serializable{
 		this.cumulativePurchaseQuantity = cumulativePurchaseQuantity;
 	}
 	
+
 	
 	
 }

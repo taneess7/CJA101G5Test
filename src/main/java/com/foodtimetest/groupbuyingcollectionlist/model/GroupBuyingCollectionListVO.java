@@ -1,7 +1,7 @@
 package com.foodtimetest.groupbuyingcollectionlist.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 public class GroupBuyingCollectionListVO implements Serializable{
 	
@@ -26,6 +26,8 @@ public class GroupBuyingCollectionListVO implements Serializable{
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
+
+	
 	
 	
 	
