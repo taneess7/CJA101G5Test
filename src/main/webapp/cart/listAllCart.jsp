@@ -66,14 +66,16 @@
                                         <input type="hidden" name="action" value="getOne_For_Update">
                                         <button type="submit" class="btn btn-warning btn-sm">✏️ 修改</button>
                                     </form>
-                                    
-                                    <form method="post" action="<%=request.getContextPath()%>/cart/cart.do" class="action-form">
-                                        <input type="hidden" name="shopId" value="${cartVO.shopId}">
-                                        <input type="hidden" name="action" value="delete">
-                                        <button type="submit" class="btn btn-danger btn-sm" 
-                                                onclick="return confirm('確定要刪除這個項目嗎？')">🗑️ 刪除</button>
-                                    </form>
-                                </div>
+
+									<form method="post"
+										action="<%=request.getContextPath()%>/cart/cart.do"
+										class="action-form">
+										<input type="hidden" name="shopId" value="${cartVO.shopId}">
+										<input type="hidden" name="action" value="delete">
+										<button type="submit" class="btn btn-danger btn-sm"
+											onclick="return confirm('確定要刪除這個項目嗎？')">🗑️ 刪除</button>
+									</form>
+								</div>
                             </td>
                         </tr>
                     </c:forEach>
