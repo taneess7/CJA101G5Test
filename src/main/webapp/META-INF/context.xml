@@ -14,7 +14,16 @@
               type="javax.sql.DataSource"
               url="jdbc:mysql://localhost:3306/g05?serverTimezone=Asia/Taipei"
               username="root" />
-
+     <Resource auth="Container" 
+     		   driverClassName="com.mysql.cj.jdbc.Driver" 
+     		   maxIdle="10" 
+     		   maxTotal="20" 
+     		   maxWaitMillis="-1" 
+     		   name="jdbc/TestDB3" 
+     		   password="11111" 
+     		   type="javax.sql.DataSource" 
+     		   url="jdbc:mysql://localhost:3306/g05?serverTimezone=Asia/Taipei" 
+     		   username="root"/>  
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>

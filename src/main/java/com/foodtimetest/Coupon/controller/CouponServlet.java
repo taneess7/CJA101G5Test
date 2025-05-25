@@ -110,6 +110,8 @@ public class CouponServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			/*************************** 1.接收請求參數 ****************************************/
+
+			 
 			Integer couId = Integer.valueOf(req.getParameter("couId"));
 
 			Integer storId = Integer.valueOf(req.getParameter("storId"));
@@ -175,6 +177,8 @@ public class CouponServlet extends HttpServlet {
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("couponVO", couponVO); // 資料庫update成功後,正確的的couponVO物件,存入req/
+			System.out.println("✅ 有執行 update，couId=" + couponVO.getCouId());
+			
 			String url = "/coupon/listOneCoupon.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
@@ -265,12 +269,27 @@ public class CouponServlet extends HttpServlet {
 
 			/*************************** 2.開始刪除資料 ***************************************/
 			CouponService couSvc = new CouponService();
-			couSvc.deleteCoupon(couId);
+			try{
+				couSvc.deleteCoupon(couId);
+				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+				String url = "/coupon/listAllCoupon.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+			} catch (Exception e) {
+			
+				    res.setContentType("text/html; charset=UTF-8");
+				    PrintWriter out = res.getWriter();
+				    out.println("<html><body>");
+				    out.println("<h3 style='color:red;'>關聯到會員持有優惠券，刪除失敗：</h3>");
+				    out.println("<p>" + e.getMessage() + "</p>");
+				    out.println("<a href='" + req.getContextPath() + "/coupon/listAllCoupon.jsp'>回優惠券列表</a>");
+				    out.println("</body></html>");
+			
+			
+			
+			}
 
-			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			String url = "/coupon/listAllCoupon.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-			successView.forward(req, res);
+			
 		}
 
 	}

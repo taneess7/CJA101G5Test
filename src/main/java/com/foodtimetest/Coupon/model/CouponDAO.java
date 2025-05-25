@@ -91,7 +91,7 @@ public class CouponDAO implements CouponDAO_interface{
 			pstmt.setInt(6, couponVO.getCouId());
 			
 			pstmt.executeUpdate();
-
+			
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
