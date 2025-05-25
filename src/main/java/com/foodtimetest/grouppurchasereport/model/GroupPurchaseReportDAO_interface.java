@@ -11,7 +11,7 @@ public interface GroupPurchaseReportDAO_interface {
 	public GroupPurchaseReportVO findByPrimaryKey(Integer reportId);
 	public List<GroupPurchaseReportVO> getAll();
 	// 查詢特定會員檢舉紀錄
-	public List<GroupPurchaseReportVO> findByMemberId(Integer memId);
+	public List<GroupPurchaseReportVO> findByMemId(Integer memId);
 	// 查詢特定團購案的檢舉紀錄
 	public List<GroupPurchaseReportVO> findByGBId(Integer gbId);
 }

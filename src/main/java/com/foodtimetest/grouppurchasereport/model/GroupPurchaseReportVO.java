@@ -1,7 +1,7 @@
 package com.foodtimetest.grouppurchasereport.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 public class GroupPurchaseReportVO implements Serializable{
 	
@@ -61,6 +61,8 @@ public class GroupPurchaseReportVO implements Serializable{
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
+	
+	
 	
 	
 	

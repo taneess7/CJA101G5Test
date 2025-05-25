@@ -13,7 +13,7 @@ public interface GroupOrdersDAO_interface {
     //查詢某一團購案的所有訂單
     public List<GroupOrdersVO> findByGBId(Integer gbId);
 	//查詢某一會員的所有團購訂單
-    public List<GroupOrdersVO> findByMemberId(Integer memId);
+    public List<GroupOrdersVO> findByParId(Integer parId);
     
     
 }

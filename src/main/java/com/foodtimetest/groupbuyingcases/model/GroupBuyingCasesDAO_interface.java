@@ -13,9 +13,9 @@ public interface GroupBuyingCasesDAO_interface {
 	//查詢某會員開的所有團購案（MEM_ID）
 	public List<GroupBuyingCasesVO> findByMemId(Integer memId);
 	// 查詢某店家開的所有團購案（STOR_ID）
-	public List<GroupBuyingCasesVO> findByStoreId(Integer storId);
+	public List<GroupBuyingCasesVO> findByStorId(Integer storId);
 	// 查詢某商品對應的團購案（GB_PROD_ID）
-	public List<GroupBuyingCasesVO> findByProductId(Integer gbProdId);
+	public List<GroupBuyingCasesVO> findByGBProdId(Integer gbProdId);
 
 }
 
