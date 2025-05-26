@@ -1,4 +1,4 @@
-package com.foodtimetest.mem.orders;
+package com.foodtimetest.mem.orders.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
