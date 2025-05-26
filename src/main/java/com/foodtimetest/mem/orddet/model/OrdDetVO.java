@@ -1,4 +1,4 @@
-package com.foodtimetest.mem.orddet;
+package com.foodtimetest.mem.orddet.model;
 
 import java.io.Serializable;
 

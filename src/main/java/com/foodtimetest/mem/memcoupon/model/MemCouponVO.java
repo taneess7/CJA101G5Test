@@ -1,4 +1,4 @@
-package com.foodtimetest.mem.memcoupon;
+package com.foodtimetest.mem.memcoupon.model;
 
 import java.io.Serializable;
 
