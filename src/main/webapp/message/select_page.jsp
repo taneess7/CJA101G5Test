@@ -52,7 +52,7 @@
   
   
   <li>
-    <FORM METHOD="post" ACTION="message/message.do" >
+    <FORM METHOD="post" ACTION="${pageContext.request.contextPath}message/message.do" >
         <b>輸入留言編號 (如1):</b>
         <input type="text" name="mesId">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -65,9 +65,9 @@
   <li>
      <FORM METHOD="post" ACTION="message.do" >
        <b>選擇留言編號:</b>
-       <select size="1" name="empno">
-         <c:forEach var="messageVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.empno}
+       <select size="1" name="mesId">
+         <c:forEach var="messageVO" items="${messageSvc.all}" > 
+          <option value="${messageVO.mesId}">${messageVO.mesId}</option>
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -77,9 +77,9 @@
   
   <li>
      <FORM METHOD="post" ACTION="message.do" >
-       <b>選擇員工姓名:</b>
-       <select size="1" name="empno">
-         <c:forEach var="messageVO" items="${empSvc.all}" > 
+       <b>選擇會員編號:</b>
+       <select size="1" name="mesId">
+         <c:forEach var="messageVO" items="${messageSvc.all}" > 
           <option value="${messageVO.mesId}">${messageVO.mesId}
          </c:forEach>   
        </select>

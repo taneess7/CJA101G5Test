@@ -5,7 +5,8 @@
 <% //見com.emp.controller.EmpServlet.java第163行存入req的empVO物件 (此為從資料庫取出的empVO, 也可以是輸入格式有錯誤時的empVO物件)
 MessageVO MessageVO = (MessageVO) request.getAttribute("messageVO");
 %>
---<%= MessageVO==null %>--${MessageVO.mesId}-- <!-- for line 100 -->
+--<%= MessageVO != null ? MessageVO.getMesId() : "null" %>-- <!-- for line 100 -->
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -65,11 +66,11 @@ MessageVO MessageVO = (MessageVO) request.getAttribute("messageVO");
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="/message/message.do" name="form1">
+<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/message/message.do" name="form1">
 <table>
 	<tr>
 		<td>留言編號:<font color=red><b>*</b></font></td>
-		<td><%=MessageVO.getMesId()%></td>
+		<td><input type="TEXT" name="mesId" value="<%=MessageVO.getPostId()%>" size="45"/></td>
 	</tr>
 	<tr>
 		<td>貼文編號:</td>
@@ -81,18 +82,18 @@ MessageVO MessageVO = (MessageVO) request.getAttribute("messageVO");
 	</tr>
 	<tr>
 		<td>留言日期:</td>
-		<td><input name="mesDate" id="f_date1" type="text" ></td> 
+		<td><input type="TEXT" name="mesDate"   value="<%=MessageVO.getMemId()%>" size="45" id="mes_content"/></td> 
 	</tr>
 	<tr>
-<!-- 		<td>留言內容:</td> -->
-<%-- 		<td><input type="TEXT" name="content"   value="<%=MessageVO.getContent()%>" size="45"/></td> --%>
-<!-- 	</tr> -->
+		<td>留言內容:</td>
+		<td><input type="TEXT" name="mesContent"   value="<%=MessageVO.getMesContent()%>" size="45"/></td>
+	</tr>
 	
 
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="empno" value="<%=MessageVO.getMesId()%>">
+<input type="hidden" name="mesId" value="<%=MessageVO.getMesId()%>">
 <input type="submit" value="送出修改"></FORM>
 </body>
 

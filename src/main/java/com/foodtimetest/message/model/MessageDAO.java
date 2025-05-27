@@ -13,18 +13,18 @@ public class MessageDAO implements MessageDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB1");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB87");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private static final String INSERT_STMT = "INSERT INTO MESSAGE (POST_ID, MEM_ID, MES_DATE, MES_CONTENT) VALUES ()";
-	private static final String GET_ALL_STMT = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT ORDER BY MES_ID";
-	private static final String GET_ONE_STMT = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT WHERE MES_ID = ?";
-	private static final String DELETE = "DELETE FROM MESSAGE WHERE MES_ID";
-	private static final String UPDATE = "UPDATE MESSAGE SET MES_ID = ?, POST_ID = ?, MEM_ID = ?, MES_DATE = ?, MES_CONTENT = ?";
-	private static final String GET_BY_MEM_ID = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT FROM MESSAGE WHERE MES_ID = ? ORDER BY MES_ID";
+	private static final String INSERT_STMT = "INSERT INTO MESSAGE (POST_ID, MEM_ID, MES_DATE, MES_CONTENT) VALUES (?,?,?,?)";
+	private static final String GET_ALL_STMT = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT FROM MESSAGE ORDER BY MES_ID";
+	private static final String GET_ONE_STMT = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT FROM MESSAGE WHERE MES_ID = ?";
+	private static final String DELETE = "DELETE FROM MESSAGE WHERE MES_ID = ?";
+	private static final String UPDATE = "UPDATE MESSAGE SET POST_ID = ?, MEM_ID = ?, MES_DATE = ?, MES_CONTENT = ?  WHERE MES_ID = ?";
+	private static final String GET_BY_MEM_ID = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT FROM MESSAGE WHERE MEM_ID = ? ORDER BY MES_ID";
 	private static final String GET_BY_POST_ID = "SELECT MES_ID, POST_ID, MEM_ID, MES_DATE, MES_CONTENT FROM MESSAGE WHERE POST_ID = ? ORDER BY MES_ID";
 	
 	@Override
@@ -65,6 +65,8 @@ public class MessageDAO implements MessageDAO_interface{
 	}
 	@Override
 	public void update(MessageVO messageVO) {
+		 System.out.println("Updating message: " + messageVO.getMesId());
+		    System.out.println("Content: " + messageVO.getMesContent());
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -143,6 +145,7 @@ public class MessageDAO implements MessageDAO_interface{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		System.out.println("DAO 收到的 mesId = " + mesId);
 		
 		try {
 			con = ds.getConnection();
@@ -184,7 +187,7 @@ public class MessageDAO implements MessageDAO_interface{
 		return messageVO;
 	}
 	@Override
-	public List<MessageVO> getALL() {
+	public List<MessageVO> getALL() {		
 		List<MessageVO> list = new ArrayList<MessageVO>();
 		MessageVO messageVO = null;
 		Connection con = null;
@@ -193,6 +196,7 @@ public class MessageDAO implements MessageDAO_interface{
 		
 		try {
 			con = ds.getConnection();
+			System.out.println("DEBUG SQL: " + GET_ALL_STMT);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			
 			rs = pstmt.executeQuery();
