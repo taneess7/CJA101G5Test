@@ -1,0 +1,489 @@
+From e8392498a27bae0d84d797cec419d561f6638f85 Mon Sep 17 00:00:00 2001
+From: Jamie Wu <meigo1229@gmail.com>
+Date: Tue, 27 May 2025 01:09:42 +0800
+Subject: [PATCH] =?UTF-8?q?fix:=20=E9=81=B8=E6=93=87=E5=BA=97=E5=AE=B6?=
+ =?UTF-8?q?=E7=B7=A8=E8=99=9F=E6=9F=A5=E8=A9=A2=E5=8A=9F=E8=83=BD(?=
+ =?UTF-8?q?=E4=BF=AE=E6=94=B9=E5=84=AA=E6=83=A0=E5=88=B8=E7=9B=B8=E9=97=9C?=
+ =?UTF-8?q?=E6=AA=94=E6=A1=88-dao.dao=5Finterface.service.servlet)=20?=
+ =?UTF-8?q?=E6=96=B0=E5=A2=9Elistallcoupon2.jsp?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ .../Coupon/controller/CouponServlet.java      |  71 +++++++++-
+ .../foodtimetest/Coupon/model/CouponDAO.java  | 126 +++++++++++++++++-
+ .../Coupon/model/CouponDAO_interface.java     |   3 +
+ .../Coupon/model/CouponService.java           |   8 ++
+ src/main/webapp/coupon/listAllCoupon2.jsp     | 111 +++++++++++++++
+ src/main/webapp/coupon/listOneCoupon.jsp      |  21 +--
+ src/main/webapp/coupon/select_page.jsp        |  12 +-
+ 7 files changed, 334 insertions(+), 18 deletions(-)
+ create mode 100644 src/main/webapp/coupon/listAllCoupon2.jsp
+
+diff --git a/src/main/java/com/foodtimetest/Coupon/controller/CouponServlet.java b/src/main/java/com/foodtimetest/Coupon/controller/CouponServlet.java
+index 5f365b2..c500123 100644
+--- a/src/main/java/com/foodtimetest/Coupon/controller/CouponServlet.java
++++ b/src/main/java/com/foodtimetest/Coupon/controller/CouponServlet.java
+@@ -21,6 +21,18 @@ public class CouponServlet extends HttpServlet {
+ 
+ 		req.setCharacterEncoding("UTF-8");
+ 		String action = req.getParameter("action");
++		
++
++		    // 沒有 action，代表是初次載入 select_page.jsp → 載入不重複店家編號清單
++		    if (action == null) {
++		        CouponService couponSvc = new CouponService();
++		        List<CouponVO> distinctStorList = couponSvc.getDistinctStorId(); // 取得不重複商家id
++		        req.setAttribute("distinctStorList", distinctStorList);
++		        
++		        RequestDispatcher dispatcher = req.getRequestDispatcher("/coupon/select_page.jsp");
++		        dispatcher.forward(req, res);
++		        return; // 轉交
++		    }
+ 
+ 		// ****************優惠券查詢 ****************//
+ 
+@@ -34,7 +46,7 @@ public class CouponServlet extends HttpServlet {
+ 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+ 			String str = req.getParameter("couId");
+ 			if (str == null || (str.trim()).length() == 0) {
+-				errorMsgs.add("請輸入員工編號");
++				errorMsgs.add("請輸入優惠券編號");
+ 			}
+ 			// Send the use back to the form, if there were errors
+ 			if (!errorMsgs.isEmpty()) {
+@@ -48,7 +60,7 @@ public class CouponServlet extends HttpServlet {
+ 			try {
+ 				couId = Integer.valueOf(str);
+ 			} catch (Exception e) {
+-				errorMsgs.add("員工編號格式不正確");
++				errorMsgs.add("優惠券編號格式不正確");
+ 			}
+ 			// Send the use back to the form, if there were errors
+ 			if (!errorMsgs.isEmpty()) {
+@@ -291,6 +303,61 @@ public class CouponServlet extends HttpServlet {
+ 
+ 			
+ 		}
++		
++		// ****************各別店家優惠券查詢 ****************//
++
++				if ("getOne_Storecoupon_Display".equals(action)) {// 來自select_page.jsp的請求
++
++					List<String> errorMsgs = new LinkedList<String>();
++					// Store this set in the request scope, in case we need to
++					// send the ErrorPage view.
++					req.setAttribute("errorMsgs", errorMsgs);
++
++					/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
++					String str = req.getParameter("storId");
++					if (str == null || (str.trim()).length() == 0) {
++						errorMsgs.add("請輸入店家編號");
++					}
++					// Send the use back to the form, if there were errors
++					if (!errorMsgs.isEmpty()) {
++						RequestDispatcher failureView = req.getRequestDispatcher("/coupon/select_page.jsp");
++						failureView.forward(req, res);
++						return;// 有errorMsgs就跳頁，不處理後續流程，程式中斷
++
++					}
++
++					Integer storId = null;
++					try {
++						storId = Integer.valueOf(str);
++					} catch (Exception e) {
++						errorMsgs.add("店家編號格式不正確");
++					}
++					// Send the use back to the form, if there were errors
++					if (!errorMsgs.isEmpty()) {
++						RequestDispatcher failureView = req.getRequestDispatcher("/coupon/select_page.jsp");
++						failureView.forward(req, res);
++						return;// 有errorMsgs，程式中斷
++					}
++
++					/*************************** 2.開始查詢資料 *****************************************/
++					CouponService couponSvc = new CouponService();
++					List <CouponVO> couponList = couponSvc.getStorCoupon(storId);
++					if (couponList == null  || couponList.isEmpty()) {
++						errorMsgs.add("查無資料");
++					}
++					// 如果有錯誤，將使用者導回原本的輸入表單頁面
++					if (!errorMsgs.isEmpty()) {
++						RequestDispatcher failureView = req.getRequestDispatcher("/coupon/select_page.jsp");
++						failureView.forward(req, res);
++						return;// 程式中斷
++					}
++
++					/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
++					req.setAttribute("storCoupons", couponList);
++					String url = "/coupon/listAllCoupon2.jsp";
++					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listAllOneCoupon2.jsp
++					successView.forward(req, res);
++				}
+ 
+ 	}
+ }
+diff --git a/src/main/java/com/foodtimetest/Coupon/model/CouponDAO.java b/src/main/java/com/foodtimetest/Coupon/model/CouponDAO.java
+index 3f3704a..50b2f42 100644
+--- a/src/main/java/com/foodtimetest/Coupon/model/CouponDAO.java
++++ b/src/main/java/com/foodtimetest/Coupon/model/CouponDAO.java
+@@ -26,8 +26,8 @@ public class CouponDAO implements CouponDAO_interface{
+ 	private static final String GET_ONE_STMT = "SELECT COU_ID, STOR_ID, COU_TYPE, COU_DES, COU_MIN_ORD, COU_DATE FROM COUPON WHERE COU_ID = ?";
+ 	private static final String DELETE = "DELETE FROM COUPON WHERE COU_ID = ?";
+ 	private static final String UPDATE = "UPDATE COUPON SET STOR_ID = ?, COU_TYPE = ?, COU_DES = ?, COU_MIN_ORD = ?, COU_DATE= ? WHERE COU_ID = ? ";
+-	
+-	
++	private static final String GET_STOR_COU = "SELECT * FROM COUPON WHERE STOR_ID = ?;";
++	private static final String GET_STOR_LIST = "SELECT DISTINCT STOR_ID FROM COUPON ORDER BY STOR_ID";
+ 
+ 	@Override
+ 	public void insert(CouponVO couponVO) {
+@@ -276,9 +276,131 @@ public class CouponDAO implements CouponDAO_interface{
+ 			}
+ 		}
+ 		return list;
++	}
++	
++	@Override
++	public List<CouponVO> findByStorId(Integer storId){
++		
++		List<CouponVO> list = new ArrayList<CouponVO>();
++		CouponVO couponVO = null;
++		Connection con = null;
++		PreparedStatement pstmt = null;
++		ResultSet rs = null;
++		
++		try {
++
++			con = ds.getConnection();
++			pstmt = con.prepareStatement(GET_STOR_COU);
++
++			pstmt.setInt(1, storId); //參數注入?內
++
++			rs = pstmt.executeQuery();
++
++			while (rs.next()) {
++			
++				couponVO = new CouponVO();
++				couponVO.setCouId(rs.getInt("COU_ID"));
++				couponVO.setStorId(rs.getInt("STOR_ID"));
++				couponVO.setCouType(rs.getString("COU_TYPE"));
++				couponVO.setCouDes(rs.getString("COU_DES"));
++				couponVO.setCouMinOrd(rs.getInt("COU_MIN_ORD"));
++				couponVO.setCouDate(rs.getTimestamp("COU_DATE"));
++				list.add(couponVO); // Store the row in the list
++				System.out.println("✅ DAO 抓到 storeId: " + rs.getInt("STOR_ID"));
++
++			}
++
++			// Handle any driver errors
++		} catch (SQLException se) {
++			throw new RuntimeException("A database error occured. "
++					+ se.getMessage());
++			// Clean up JDBC resources
++		} finally {
++			if (rs != null) {
++				try {
++					rs.close();
++				} catch (SQLException se) {
++					se.printStackTrace(System.err);
++				}
++			}
++			if (pstmt != null) {
++				try {
++					pstmt.close();
++				} catch (SQLException se) {
++					se.printStackTrace(System.err);
++				}
++			}
++			if (con != null) {
++				try {
++					con.close();
++				} catch (Exception e) {
++					e.printStackTrace(System.err);
++				}
++			}
++		
++		}
+ 		
++		return list;
++	}
+ 
+ 	
++	public List<CouponVO> findDistinctStorId() {
++		List<CouponVO> list = new ArrayList<CouponVO>();
++		CouponVO couponVO = null;
++		Connection con = null;
++		PreparedStatement pstmt = null;
++		ResultSet rs = null;
++		
++		
++		try {
++
++			con = ds.getConnection();
++			pstmt = con.prepareStatement(GET_STOR_LIST);
++			rs = pstmt.executeQuery();
++
++			while (rs.next()) {
++				
++				couponVO = new CouponVO();
++			    couponVO.setStorId(rs.getInt("STOR_ID"));
++				list.add(couponVO); // Store the row in the list
++				System.out.println("✅ DAO 抓到 storeId: " + rs.getInt("STOR_ID"));
++			}
++			// Handle any driver errors
++		} catch (SQLException se) {
++			throw new RuntimeException("A database error occured. "
++					+ se.getMessage());
++			// Clean up JDBC resources
++		} finally {
++			if (rs != null) {
++				try {
++					rs.close();
++				} catch (SQLException se) {
++					se.printStackTrace(System.err);
++				}
++			}
++			if (pstmt != null) {
++				try {
++					pstmt.close();
++				} catch (SQLException se) {
++					se.printStackTrace(System.err);
++				}
++			}
++			if (con != null) {
++				try {
++					con.close();
++				} catch (Exception e) {
++					e.printStackTrace(System.err);
++				}
++			}
++		
++		}
++		
++		
++		
++		return list;
+ 	}
++	
++	
++
+ 
+ }
+diff --git a/src/main/java/com/foodtimetest/Coupon/model/CouponDAO_interface.java b/src/main/java/com/foodtimetest/Coupon/model/CouponDAO_interface.java
+index fc9e1c3..df82547 100644
+--- a/src/main/java/com/foodtimetest/Coupon/model/CouponDAO_interface.java
++++ b/src/main/java/com/foodtimetest/Coupon/model/CouponDAO_interface.java
+@@ -10,4 +10,7 @@ public interface CouponDAO_interface {
+ 	public void delete(Integer couId);
+ 	public CouponVO findByPrimaryKey(Integer couId);//單一查詢出貨歷史
+ 	public List<CouponVO> getAll();
++	public List<CouponVO> findByStorId(Integer storId);//查詢相同商家優惠券
++	public List<CouponVO> findDistinctStorId();
++	
+ }
+diff --git a/src/main/java/com/foodtimetest/Coupon/model/CouponService.java b/src/main/java/com/foodtimetest/Coupon/model/CouponService.java
+index eb636a5..731648b 100644
+--- a/src/main/java/com/foodtimetest/Coupon/model/CouponService.java
++++ b/src/main/java/com/foodtimetest/Coupon/model/CouponService.java
+@@ -52,5 +52,13 @@ public class CouponService {
+ 	public List<CouponVO> getAll() {
+ 		return dao.getAll();
+ 	}
++	
++	public List<CouponVO> getStorCoupon(Integer storId) {
++		return dao.findByStorId(storId);
++	}
++	
++	public List<CouponVO> getDistinctStorId(){
++		return dao.findDistinctStorId();
++	}
+ 
+ }
+diff --git a/src/main/webapp/coupon/listAllCoupon2.jsp b/src/main/webapp/coupon/listAllCoupon2.jsp
+new file mode 100644
+index 0000000..3c05856
+--- /dev/null
++++ b/src/main/webapp/coupon/listAllCoupon2.jsp
+@@ -0,0 +1,111 @@
++<%@ page language="java" contentType="text/html; charset=UTF-8"
++    pageEncoding="UTF-8"%>
++<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
++<%@ page import="java.util.*" %>
++<%@ page import="com.foodtimetest.Coupon.model.*"%>
++
++<%-- 此頁練習採用 EL 的寫法取值 --%>
++
++
++<!DOCTYPE html>
++<html>
++<head>
++<meta charset="UTF-8">
++<title>所有優惠券資料 - listAllCoupon2.jsp</title>
++
++<style>
++	table#table-1 {
++	background-color: #CCCCFF;
++		border: 2px solid black;
++		text-align: center;
++	}
++	table#table-1 h4{
++	color: red;
++	display: block;
++	margin-bottom: 1px;	
++	}
++	h4 {
++	color: blue;
++	display: inline;
++	}
++</style>
++
++<style>
++	table {
++	width: 800px;
++	background-color: white;
++	margin-top: 5px;
++	margin-bottom: 5px;
++	}
++	table, th, td{
++	border: 1px solid #CCCCFF;
++	}
++	}
++	h4 {
++	color: blue;
++	display: inline;
++	}
++	th, td {
++		padding: 5px;
++		text-align: center;
++	}
++</style>
++
++
++</head>
++<body bgcolor='white'>
++
++<h4>此頁練習採用 EL 的寫法取值:</h4>
++<table id="table-1">
++	<tr><td>
++	    <h3>所有優惠券資料 - listAllCoupon2.jsp</h3>
++	    <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
++	</td></tr>
++</table>
++
++<table>
++     <%--table欄位名稱 --%>
++	<tr>
++		<th>優惠券編號</th>
++		<th>店家編號</th>
++		<th>優惠券說明</th>
++		<th>優惠券類型</th>
++		<th>最低消費金額限制</th>
++		<th>使用期限</th>
++		<th>修改</th>
++		<th>刪除</th>
++	</tr>
++	
++	 <%--顯示查詢分頁 --%>
++<%-- 	<%@ include file="page1.file" %>  --%>
++	<c:forEach var="couponVO" items="${storCoupons}" >
++
++     <%--顯示每個欄位內容 --%>
++    <tr>
++    	<td>${couponVO.couId }</td>
++    	<td>${couponVO.storId }</td>
++    	<td>${couponVO.couType }</td>
++    	<td>${couponVO.couDes }</td>
++    	<td>${couponVO.couMinOrd }</td>
++    	<td>${couponVO.couDate }</td>
++    	
++    	<%--修改按鈕 --%>
++    	<td>
++    		<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" style="margin-bottom: 0px;"> <%-- 傳送給 /coupon/coupon.do 這支 Servlet 來處理。--%> 
++    			<input type="submit" value="修改"> <%--hidden使用者不需要看見（避免誤刪、誤改），但後端需要用 --%>
++    			<input type="hidden" name="couId" value="${couponVO.couId}"> <%-- 表單送出時將 couponVO.couId 傳給後端的 request.getParameter("couId")--%>
++    			<input type="hidden" name="action" value="getOne_For_Update"></FORM> <%--告訴 Servlet 處理getOne_For_Update 功能--%>
++    	</td>
++    	<td>
++    		<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do" style="margin-bottom: 0px;">
++    			<input type="submit" value="刪除">
++    			<input type="hidden" name="couId" value="${couponVO.couId}">
++    			<input type="hidden" name="action" value="delete"></FORM>
++    	</td>
++    	</tr>   		
++    </c:forEach>
++    </table>
++    
++<%-- <%@ include file="page2.file" %> --%>
++</body>
++</html>
+\ No newline at end of file
+diff --git a/src/main/webapp/coupon/listOneCoupon.jsp b/src/main/webapp/coupon/listOneCoupon.jsp
+index 40d931c..eb44b21 100644
+--- a/src/main/webapp/coupon/listOneCoupon.jsp
++++ b/src/main/webapp/coupon/listOneCoupon.jsp
+@@ -1,5 +1,8 @@
+ <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ page import="com.foodtimetest.Coupon.model.*"%>
++<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
++
++
+ <%-- 此頁暫練習採用 Script 的寫法取值 --%>
+ 
+ <%
+@@ -62,14 +65,16 @@
+ 		<th>最低消費金額限制</th>
+ 		<th>使用期限</th>
+ 	</tr>
+-	<tr>
+-		<td><%=couponVO.getCouId()%></td>
+-		<td><%=couponVO.getStorId()%></td>
+-		<td><%=couponVO.getCouDes()%></td>
+-		<td><%=couponVO.getCouType()%></td>
+-		<td><%=couponVO.getCouMinOrd()%></td>
+-		<td><%=couponVO.getCouDate()%></td>
+-	</tr>
++<%-- 	<c:forEach var="coupon" items="${couponList}"> --%>
++		<tr>
++			<td><%=couponVO.getCouId()%></td>
++			<td><%=couponVO.getStorId()%></td>
++			<td><%=couponVO.getCouDes()%></td>
++			<td><%=couponVO.getCouType()%></td>
++			<td><%=couponVO.getCouMinOrd()%></td>
++			<td><%=couponVO.getCouDate()%></td>
++		</tr>
++<%-- 	</c:forEach> --%>
+ </table>
+ 
+ </body>
+diff --git a/src/main/webapp/coupon/select_page.jsp b/src/main/webapp/coupon/select_page.jsp
+index db20edb..40752bf 100644
+--- a/src/main/webapp/coupon/select_page.jsp
++++ b/src/main/webapp/coupon/select_page.jsp
+@@ -88,16 +88,16 @@
+        <input type="submit" value="送出">
+      </FORM>
+   </li>
+-  
++
+   <li>
+-     <FORM METHOD="post" ACTION="coupon.do" >
++     <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do">
+        <b>選擇店家編號:</b>
+-       <select size="1" name="couId">
+-         <c:forEach var="couponVO" items="${couponSvc.all}" > 
+-          <option value="${couponVO.couId}">${couponVO.storId}
++       <select size="1" name="storId">
++         <c:forEach var="couponVO" items="${distinctStorList}" > 
++          <option value="${couponVO.storId}">${couponVO.storId}
+          </c:forEach>   
+        </select>
+-       <input type="hidden" name="action" value="getOne_For_Display">
++       <input type="hidden" name="action" value="getOne_Storecoupon_Display">
+        <input type="submit" value="送出">
+      </FORM>
+   </li>
+-- 
+2.48.1.windows.1
+

@@ -1,5 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.foodtimetest.Coupon.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
@@ -62,14 +65,16 @@
 		<th>最低消費金額限制</th>
 		<th>使用期限</th>
 	</tr>
-	<tr>
-		<td><%=couponVO.getCouId()%></td>
-		<td><%=couponVO.getStorId()%></td>
-		<td><%=couponVO.getCouDes()%></td>
-		<td><%=couponVO.getCouType()%></td>
-		<td><%=couponVO.getCouMinOrd()%></td>
-		<td><%=couponVO.getCouDate()%></td>
-	</tr>
+<%-- 	<c:forEach var="coupon" items="${couponList}"> --%>
+		<tr>
+			<td><%=couponVO.getCouId()%></td>
+			<td><%=couponVO.getStorId()%></td>
+			<td><%=couponVO.getCouDes()%></td>
+			<td><%=couponVO.getCouType()%></td>
+			<td><%=couponVO.getCouMinOrd()%></td>
+			<td><%=couponVO.getCouDate()%></td>
+		</tr>
+<%-- 	</c:forEach> --%>
 </table>
 
 </body>

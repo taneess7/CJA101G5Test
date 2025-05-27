@@ -63,8 +63,10 @@ th, td {
 				<h3>優惠券資料新增 - addCoupon.jsp</h3>
 				<h4>
 					<img src="images/tomcat.png"
-						width="50" height="50" border="0"><br><a href="select_page.jsp">回首頁 
-					</a>
+						width="50" height="50" border="0"><br>
+<!-- 						<a href="select_page.jsp">回首頁 </a> -->
+						<a href="${pageContext.request.contextPath}/coupon/coupon.do">回首頁 </a>
+					
 				</h4>
 			</td>
 		</tr>

@@ -52,5 +52,13 @@ public class CouponService {
 	public List<CouponVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<CouponVO> getStorCoupon(Integer storId) {
+		return dao.findByStorId(storId);
+	}
+	
+	public List<CouponVO> getDistinctStorId(){
+		return dao.findDistinctStorId();
+	}
 
 }

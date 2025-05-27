@@ -88,16 +88,16 @@
        <input type="submit" value="送出">
      </FORM>
   </li>
-  
+
   <li>
-     <FORM METHOD="post" ACTION="coupon.do" >
+     <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/coupon/coupon.do">
        <b>選擇店家編號:</b>
-       <select size="1" name="couId">
-         <c:forEach var="couponVO" items="${couponSvc.all}" > 
-          <option value="${couponVO.couId}">${couponVO.storId}
+       <select size="1" name="storId">
+         <c:forEach var="couponVO" items="${distinctStorList}" > 
+          <option value="${couponVO.storId}">${couponVO.storId}
          </c:forEach>   
        </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="hidden" name="action" value="getOne_Storecoupon_Display">
        <input type="submit" value="送出">
      </FORM>
   </li>

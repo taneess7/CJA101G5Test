@@ -5,18 +5,13 @@
 <%@ page import="com.foodtimetest.Coupon.model.*"%>
 
 <%-- 此頁練習採用 EL 的寫法取值 --%>
-<% 
-	CouponService couSvc = new CouponService(); //用Service呼叫
-	List<CouponVO> list = couSvc.getAll();
-	pageContext.setAttribute("list",list);
-	
-%>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>所有優惠券資料 - listAllCoupon.jsp</title>
+<title>所有優惠券資料 - listAllCoupon2.jsp</title>
 
 <style>
 	table#table-1 {
@@ -63,11 +58,10 @@
 <h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-1">
 	<tr><td>
-	    <h3>所有優惠券資料 - listAllCoupon.jsp</h3>
-<!-- 	    <a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a> -->
-         <h4>
-	    <a href="${pageContext.request.contextPath}/coupon/coupon.do"><img src="images/back1.gif" width="100" height="32" border="0">回首頁 </a>
+	    <h3>所有優惠券資料 - listAllCoupon2.jsp</h3>
+	    <h4><a href="${pageContext.request.contextPath}/coupon/coupon.do"><img src="images/back1.gif" width="100" height="32" border="0">回首頁 </a>
 	    </h4>
+<!-- 	    <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4> -->
 	</td></tr>
 </table>
 
@@ -85,8 +79,8 @@
 	</tr>
 	
 	 <%--顯示查詢分頁 --%>
-	<%@ include file="page1.file" %> 
-	<c:forEach var="couponVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+<%-- 	<%@ include file="page1.file" %>  --%>
+	<c:forEach var="couponVO" items="${storCoupons}" >
 
      <%--顯示每個欄位內容 --%>
     <tr>
@@ -114,6 +108,6 @@
     </c:forEach>
     </table>
     
-<%@ include file="page2.file" %>
+<%-- <%@ include file="page2.file" %> --%>
 </body>
 </html>
