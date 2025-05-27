@@ -52,5 +52,6 @@ public class MessageService {
 	public List<MessageVO> getByPostId(Integer postId) {
 		return dao.findByPostId(postId);
 	}
-
+	
 }
+

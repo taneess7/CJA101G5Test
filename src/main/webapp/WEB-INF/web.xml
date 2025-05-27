@@ -27,6 +27,14 @@
 		<servlet-name>CartServlet</servlet-name>
 		<url-pattern>/cart/cart.do</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>MessageServlet</servlet-name>
+		<servlet-class>com.foodtimetest.message.controller.MessageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MessageServlet</servlet-name>
+		<url-pattern>/message/message.do</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>

@@ -6,6 +6,7 @@
   MessageVO messageVO = (MessageVO) request.getAttribute("messageVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 %>
 
+
 <html>
 <head>
 <title>留言資料 - listOneMessage.jsp</title>

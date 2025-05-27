@@ -77,16 +77,16 @@
 			<td>${messageVO.postId}</td>
 			<td>${messageVO.memId}</td>
 			<td>${messageVO.mesDate}</td>
-			<td>${messageVO.mesContext}</td>
+			<td>${messageVO.mesContent}</td>
 			
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/message/message.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/message/message.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="mesId"  value="${messageVO.mesId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/message/message.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/message/message.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="mesId"  value="${messageVO.mesId}">
 			     <input type="hidden" name="action" value="delete"></FORM>
