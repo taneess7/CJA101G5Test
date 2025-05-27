@@ -7,13 +7,24 @@ import java.util.Map;
 public interface MemCouponDAO_interface {
     //==============MySQL基本語法===========
     // 新增會員優惠卷
-
+    public void insert(MemCouponVO memCouponVO);
     // 修改會員優惠卷
-
+    public void update(MemCouponVO memCouponVO);
     // 刪除會員優惠卷
-
+    public void delete(Integer memCouId);
 
     //==============MySQL查詢語法===========
+    // 依據主鍵查詢會員優惠卷
+    public MemCouponVO findByPrimaryKey(Integer memCouId);
+
+    // 查詢所有會員優惠卷
+    public List<MemCouponVO> getAll();
+
+    // 查詢某會員持有的會員優惠卷
+    public List<MemCouponVO> findByMemId(Integer memId);
+
+    // 查詢某會員某會員優惠卷是否已存在
+    public boolean existsByMemIdAndCouId(Integer memId, Integer couId);
     //使用狀態相關查詢=============================================================
     // 查詢某會員未使用的優惠券 (USE_STATUS = 0)
     public List<MemCouponVO> findUnusedByMemId(Integer memId);

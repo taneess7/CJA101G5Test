@@ -3,7 +3,7 @@ package com.foodtimetest.mem.orders.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class OrdersOV implements Serializable{
+public class OrdersVO implements Serializable{
     private Integer ordId;           // 訂單編號
     private Integer memId;           // 會員編號
     private Integer storId;          // 店家編號
