@@ -99,8 +99,8 @@ th, td {
 					size="45" /></td>
 			</tr>
 			<tr>
-				<td>留言日期:</td>
-				<td><input name="mesDate" id="mesDate" type="text"></td>
+				<td>留言日期: 系統會幫你抓時間喔</td>
+<%--				<td><input name="mesDate" id="mesDate" type="text"></td>--%>
 			</tr>
 			<tr>
 				<td>留言內容:</td>
@@ -147,14 +147,14 @@ th, td {
 
 	<script>
         $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
+        $('#mesDate').datetimepicker({ //日期選擇器ID不匹配
 	       theme: '',              //theme: 'dark',
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
 	       value:   new Date(),
 	       minDate: 0
-
+		});  //你的結尾不見了
 </script>
 </body>
 </html>

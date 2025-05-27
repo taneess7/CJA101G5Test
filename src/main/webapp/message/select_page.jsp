@@ -52,7 +52,7 @@
   
   
   <li>
-    <FORM METHOD="post" ACTION="${pageContext.request.contextPath}message/message.do" >
+    <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/message/message.do" > <!--你的/少了-->
         <b>輸入留言編號 (如1):</b>
         <input type="text" name="mesId">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -63,7 +63,7 @@
   <jsp:useBean id="messageSvc" scope="page" class="com.foodtimetest.message.model.MessageService" />
    
   <li>
-     <FORM METHOD="post" ACTION="message.do" >
+     <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/message/message.do" >
        <b>選擇留言編號:</b>
        <select size="1" name="mesId">
          <c:forEach var="messageVO" items="${messageSvc.all}" > 
@@ -76,7 +76,7 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="message.do" >
+     <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/message/message.do" >
        <b>選擇會員編號:</b>
        <select size="1" name="mesId">
          <c:forEach var="messageVO" items="${messageSvc.all}" > 

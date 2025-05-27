@@ -1,8 +1,8 @@
 package com.foodtimetest.message.controller;
 
 import java.io.IOException;
-import java.rmi.ServerException;
-import java.rmi.server.ServerCloneException;
+//import java.rmi.ServerException;  //這些導入在Servlet中不需要，應該刪除
+//import java.rmi.server.ServerCloneException;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -180,7 +180,7 @@ public class MessageServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			Integer mesId = validateIntegerParameter(req, "mesId", errorMsgs, "留言編號格式不正確");
+//			Integer mesId = validateIntegerParameter(req, "mesId", errorMsgs, "留言編號格式不正確");
 			Integer postId = validateIntegerParameter(req, "postId", errorMsgs, "貼文編號格式不正確");
 			Integer memId = validateIntegerParameter(req, "memId", errorMsgs, "會員編號格式不正確");
 //			java.sql.Timestamp mesDate = null;
@@ -190,10 +190,10 @@ public class MessageServlet extends HttpServlet {
 			MessageVO messageVO = new MessageVO();
 			messageVO.setMemId(memId);
 			messageVO.setPostId(postId);
-		messageVO.setMesDate(mesDate);
+			messageVO.setMesDate(mesDate);
 			messageVO.setMesContent(mesContent);
 
-			if (mesContent == null || mesContent.trim().length() == 0) {
+			if (mesContent == null || mesContent.trim().isEmpty()) {
 				errorMsgs.add("留言內容格式不正確");
 			}			
 			
