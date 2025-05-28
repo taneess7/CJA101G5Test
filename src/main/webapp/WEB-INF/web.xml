@@ -36,5 +36,13 @@
 		<url-pattern>/message/message.do</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>FavoriteListServlet</servlet-name>
+		<servlet-class>com.foodtimetest.memfavlist.controller.FavoriteListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FavoriteListServlet</servlet-name>
+		<url-pattern>/favoritelist/favoriteList.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>
