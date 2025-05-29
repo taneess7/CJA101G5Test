@@ -95,8 +95,8 @@
 		<td>狀態:</td>
 		<td>
 		<select size="1" name="smgrStatus" >
-			<option value="1" ${smgrStatus == 1 ? 'selected' : ''}>1
-			<option value="0" ${smgrStatus == 0 ? 'selected' : ''}>0
+			<option value="1" <%= smgVO.getSmgrStatus() == 1 ? "selected" : "" %> }>在職</option>
+			<option value="0" <%= smgVO.getSmgrStatus() == 0 ? "selected" : "" %> }>離職</option>
 		</select>
 		</td>
 	</tr>

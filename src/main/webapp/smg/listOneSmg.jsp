@@ -71,7 +71,7 @@
 		<td><%=smgVO.getSmgrAccount()%></td>
 		<td><%=smgVO.getSmgrPassword()%></td>
 		<td><%=smgVO.getSmgrPhone()%></td>
-		<td><%=smgVO.getSmgrStatus()%></td>
+		<td><%= (smgVO.getSmgrStatus() == 0) ? "離職" : "在職" %></td>
 	</tr>
 </table>
 
