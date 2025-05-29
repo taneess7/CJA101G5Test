@@ -81,7 +81,7 @@
 			<td>${smgVO.smgrAccount}</td>
 			<td>${smgVO.smgrPassword}</td>
 			<td>${smgVO.smgrPhone}</td> 
-			<td>${smgVO.smgrStatus}</td>
+			<td>${smgVO.smgrStatus eq '1' ? '在職' : '離職'}</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/smg/smg.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
