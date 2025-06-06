@@ -48,42 +48,45 @@
   <li><a href='listAllFavoriteList.jsp'>List</a> all FavoriteLists.  <br><br></li>
   
   
-  <li>
-    <FORM METHOD="post" ACTION="favoriteList.do" >
-        <b>輸入會員編號 (如5):</b>
-        <input type="text" name="memId">
-        <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="送出">
-    </FORM>
-  </li>
+  <FORM METHOD="post" ACTION="favoriteList.do">
+    <b>輸入會員編號:</b>
+    <input type="text" name="memId"><br><br>
+    
+    <b>輸入商品編號:</b>
+    <input type="text" name="prodId"><br><br>
+    
+    <input type="hidden" name="action" value="getOne_For_Display">
+    <input type="submit" value="送出">
+</FORM>
+  
 
   <jsp:useBean id="favoriteListSvc" scope="page" class="com.foodtimetest.memfavlist.FavoriteListService" />
    
-  <li>
-     <FORM METHOD="post" ACTION="favoriteList.do" >
-       <b>選擇會員編號:</b>
-       <select size="1" name="memId">
-         <c:forEach var="favoriteListVO" items="${favoriteListSvc.all}" > 
-          <option value="${favoriteListVO.memId}">${favoriteListVO.prodId}
-         </c:forEach>   
-       </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-    </FORM>
-  </li>
+<!--   <li> -->
+<!--      <FORM METHOD="post" ACTION="favoriteList.do" > -->
+<!--        <b>選擇會員編號:</b> -->
+<!--        <select size="1" name="memId"> -->
+<%--          <c:forEach var="favoriteListVO" items="${favoriteListSvc.all}" >  --%>
+<%--           <option value="${favoriteListVO.memId}">${favoriteListVO.prodId} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
+<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--        <input type="submit" value="送出"> -->
+<!--     </FORM> -->
+<!--   </li> -->
   
-  <li>
-     <FORM METHOD="post" ACTION="favoriteList.do" >
-       <b>選擇商品編號:</b>
-       <select size="1" name="prodId">
-         <c:forEach var="favoriteListVO" items="${favoriteListSvc.all}" > 
-          <option value="${favoriteListVO.prodId}">${favoriteListVO.prodId}
-         </c:forEach>   
-       </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-     </FORM>
-  </li>
+<!--   <li> -->
+<!--      <FORM METHOD="post" ACTION="favoriteList.do" > -->
+<!--        <b>選擇商品編號:</b> -->
+<!--        <select size="1" name="prodId"> -->
+<%--          <c:forEach var="favoriteListVO" items="${favoriteListSvc.all}" >  --%>
+<%--           <option value="${favoriteListVO.prodId}">${favoriteListVO.prodId} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
+<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--        <input type="submit" value="送出"> -->
+<!--      </FORM> -->
+<!--   </li> -->
 </ul>
 
 
